@@ -2,17 +2,21 @@
 @import './abstracts/_variables.css';
 @import './abstracts/_mixins.css';
 @import './abstracts/_functions.css';
+@import './base/_animations.css';
+
+/* vendors */
+@import "vendors/normalize";
 
 /* base */
 @import './base/_reset.css';
 @import './base/_typography.css';
 @import './base/_base.css';
-@import './base/_animations.css';
 
 /* layout */
 @import './layout/_grid.css';
 @import './layout/_header-layout.css';
 @import './layout/_footer-layout.css';
+@import "layout/sidebar";
 
 /* components */
 @import './components/_button.css';
