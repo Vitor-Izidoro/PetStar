@@ -14,7 +14,7 @@ const Home = () => {
       case "hosts":
         return <h1 />;
       //case "depoimentos":
-        //return <h1 />;
+        //return <Depoimentos />;
       default:
         return <h1/>;
     }
