@@ -4,6 +4,7 @@ import SearchCard from "./SearchCard"
 import FeaturesSection from "./FeaturesSection"
 import CuidadorSection from "./CuidadorSection"
 import TestimonialsSection from "./TestimonialsSection"
+import Footer from "../../components/Footer";
 
 const Inicio = () => {
   return (
@@ -14,6 +15,7 @@ const Inicio = () => {
       <FeaturesSection />
       <CuidadorSection />
       <TestimonialsSection />
+      <Footer />  
     </>
   );
 };

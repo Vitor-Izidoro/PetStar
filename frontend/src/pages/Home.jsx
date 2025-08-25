@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Cuidadores from "./Cuidadores/Cuidadores";
 import Inicio from "./Inicio/Inicio";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const [section, setSection] = useState("hero"); // controla qual seção exibir
@@ -34,6 +35,7 @@ const Home = () => {
         {/* Aqui troca o conteúdo */}
         {renderContent()}
       </div>
+      <Footer />  
     </main>
   );
 };
