@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import Cuidadores from "./Cuidadores";
+import Cuidadores from "./Cuidadores/Cuidadores";
+import Inicio from "./Inicio/Inicio";
 
 const Home = () => {
   const [section, setSection] = useState("hero"); // controla qual seção exibir
@@ -11,11 +12,11 @@ const Home = () => {
       case "Cuidadores":
         return <Cuidadores />;
       case "hosts":
-        return <Hosts />;
+        return <h1 />;
       case "depoimentos":
         return <Depoimentos />;
       default:
-        return <Hero />;
+        return <h1/>;
     }
   };
 
