@@ -1,38 +1,110 @@
-import React from "react";
+import React, { useState } from "react";
+import { FaPaw } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth"; // corrigi o path
+
+export const testUsers = [
+  {
+    id: "1",
+    name: "Ana Silva",
+    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+    email: "ana.silva@email.com",
+  },
+  {
+    id: "2",
+    name: "Carlos Oliveira",
+    avatar: null, // sem avatar
+    email: "carlos.oliveira@email.com",
+  },
+  {
+    id: "3",
+    name: "Marina Costa",
+    avatar: "https://randomuser.me/api/portraits/women/45.jpg",
+    email: "marina.costa@email.com",
+  },
+  {
+    id: "4",
+    name: "Roberto Alves",
+    avatar: null, // sem avatar
+    email: "roberto.alves@email.com",
+  },
+];
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const { user, logout } = useAuth();
+  
+  const [currentUser, setCurrentUser] = useState(testUsers[0]);
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-white sticky-top">
-      <div className="container">
-        <a className="navbar-brand fw-bold" href="#">
-          <i className="fas fa-paw text-primary me-2"></i>PetStar
-        </a>
+    <nav className="bg-white shadow sticky top-0 z-50">
+      <div className="container mx-auto flex items-center justify-between px-4 py-3">
+        {/* Logo e título */}
+        <Link to="/" className="flex items-center font-bold text-2xl text-gray-800">
+          <FaPaw className="text-indigo-600 mr-2 text-xl" /> PetStar
+        </Link>
+
+        {/* Botão mobile */}
         <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
+          className="lg:hidden text-gray-700 text-2xl focus:outline-none"
+          onClick={() => setIsOpen(!isOpen)}
         >
-          <span className="navbar-toggler-icon"></span>
+          {isOpen ? "✖" : "☰"}
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav me-auto">
-            <li className="nav-item">
-              <a className="nav-link" href="#">Como funciona</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Para Donos</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Para Anfitriões</a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Ajuda</a>
-            </li>
-          </ul>
-          <div className="d-flex">
-            <a href="#" className="btn btn-outline-primary me-2">Entrar</a>
-            <a href="#" className="btn btn-primary">Cadastrar</a>
+
+        {/* Menu principal */}
+        <div className={`${isOpen ? "block" : "hidden"} lg:flex lg:items-center lg:space-x-8`}>
+
+          {/* Botões de ação (perfil ou login) */}
+          <div className="mt-4 lg:mt-0 flex flex-col lg:flex-row lg:space-x-3 space-y-2 lg:space-y-0 ml-auto">
+            {user && (
+              <>
+                <Link
+                  to="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="px-4 py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors"
+                >
+                  Entrar
+                </Link>
+                <Link
+                  to="/signup"
+                  onClick={() => setIsOpen(false)}
+                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+                >
+                  Cadastrar
+                </Link>
+              </>
+            )}
+
+            {!user && (
+              <div className="flex items-center space-x-3">
+                <Link
+                  to="/userProfile"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center px-3 py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors"
+                >
+                  {currentUser.avatar ? (
+                    <img
+                      src={currentUser.avatar}
+                      alt={currentUser.name}
+                      className="w-8 h-8 rounded-full mr-2 object-cover"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 rounded-full mr-2 border border-gray-400 text-gray-400 flex items-center justify-center font-semibold">
+                      {currentUser.name.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                  <span>{currentUser.name}</span>
+                </Link>
+                <button
+                  onClick={() => { logout(); setIsOpen(false); }}
+                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                >
+                  Sair
+                </button>
+              </div>
+            )}
+
           </div>
         </div>
       </div>

@@ -1,40 +1,20 @@
-import React, { useState } from "react";
-import Cuidadores from "./Cuidadores/Cuidadores";
-import Inicio from "./Inicio/Inicio";
+import { Outlet } from "react-router-dom";
+import NavBar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const Home = () => {
-  const [section, setSection] = useState("hero"); // controla qual seção exibir
-
-  const renderContent = () => {
-    switch (section) {
-      case "inicio":
-        return <Inicio />;
-      case "Cuidadores":
-        return <Cuidadores />;
-      case "hosts":
-        return <h1 />;
-      //case "depoimentos":
-        //return <Depoimentos />;
-      default:
-        return <h1/>;
-    }
-  };
-
   return (
-    <main className="section-padding">
-      <div className="container">
-        {/* Botões de navegação entre seções */}
-        <div className="text-center mb-4">
-          <button onClick={() => setSection("inicio")} className="btn btn-outline-primary me-2">Hero</button>
-          <button onClick={() => setSection("Cuidadores")} className="btn btn-outline-primary me-2">Como Funciona</button>
-          <button onClick={() => setSection("para_anfitrioes")} className="btn btn-outline-primary me-2">Anfitriões</button>
-          <button onClick={() => setSection("ajuda")} className="btn btn-outline-primary">Depoimentos</button>
-        </div>
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      {/* Navbar sempre no topo */}
+      <NavBar />
 
-        {/* Aqui troca o conteúdo */}
-        {renderContent()}
-      </div>
-    </main>
+      <main className="flex-1 flex flex-col items-center justify-center px-4 bg-gray-100">
+        <Outlet /> {/* Aqui entra o conteúdo da rota atual */}
+      </main>
+
+      {/* Footer sempre no rodapé */}
+      <Footer />
+    </div>
   );
 };
 
