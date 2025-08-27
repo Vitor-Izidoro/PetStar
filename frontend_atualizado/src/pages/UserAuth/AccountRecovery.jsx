@@ -1,5 +1,5 @@
-import React from "react";
 import { FaLock, FaEnvelope, FaPhone, FaComments } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function AccountRecovery() {
   return (
@@ -31,9 +31,12 @@ export default function AccountRecovery() {
             <div className="mt-4">
               <p className="text-gray-600">
                 Lembrou sua senha?{" "}
-                <a href="#" className="text-indigo-600 hover:underline">
-                  Fazer login
-                </a>
+                < Link
+                  to={"/login"}
+                  className="text-sm text-indigo-600 hover:underline font-medium"
+                >
+                  Fazer Login
+                </Link>
               </p>
             </div>
           </form>

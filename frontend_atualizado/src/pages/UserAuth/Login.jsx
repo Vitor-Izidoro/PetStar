@@ -1,5 +1,5 @@
-import React from "react";
 import { FaPaw, FaGoogle, FaFacebookF, FaApple } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -39,12 +39,12 @@ const Login = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
               />
               <div className="flex justify-end mt-2">
-                <a
-                  href="#"
+                < Link
+                  to={"/accountRecovery"}
                   className="text-sm text-indigo-600 hover:underline font-medium"
                 >
                   Esqueceu a senha?
-                </a>
+                </Link>
               </div>
             </div>
 

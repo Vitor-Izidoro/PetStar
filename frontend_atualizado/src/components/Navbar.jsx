@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaPaw } from "react-icons/fa";
+import { FaPaw, FaSignOutAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth"; // corrigi o path
 
@@ -40,9 +40,39 @@ const Navbar = () => {
     <nav className="bg-white shadow sticky top-0 z-50">
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
         {/* Logo e título */}
-        <Link to="/" className="flex items-center font-bold text-2xl text-gray-800">
-          <FaPaw className="text-indigo-600 mr-2 text-xl" /> PetStar
-        </Link>
+        <div className="flex items-center space-x-6">
+          <Link to="/" className="flex items-center font-bold text-2xl text-gray-800">
+            <FaPaw className="text-indigo-600 mr-2 text-xl" /> PetStar
+          </Link>
+
+          {/* Botões de navegação principais */}
+          <div className="hidden lg:flex space-x-4">
+            <Link
+              to="/"
+              className="px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+            >
+              Inicio
+            </Link>
+            <Link
+              to="/reservations"
+              className="px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+            >
+              Minhas Reservas
+            </Link>
+            <Link
+              to="/pets"
+              className="px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+            >
+              Meus Pets
+            </Link>
+            <Link
+              to="/monitoramentos"
+              className="px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+            >
+              Meus Monitoramentos
+            </Link>
+          </div>
+        </div>
 
         {/* Botão mobile */}
         <button
@@ -54,7 +84,6 @@ const Navbar = () => {
 
         {/* Menu principal */}
         <div className={`${isOpen ? "block" : "hidden"} lg:flex lg:items-center lg:space-x-8`}>
-
           {/* Botões de ação (perfil ou login) */}
           <div className="mt-4 lg:mt-0 flex flex-col lg:flex-row lg:space-x-3 space-y-2 lg:space-y-0 ml-auto">
             {user && (
@@ -98,13 +127,12 @@ const Navbar = () => {
                 </Link>
                 <button
                   onClick={() => { logout(); setIsOpen(false); }}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                  className="px-6 py-4 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                 >
-                  Sair
+                  <FaSignOutAlt />
                 </button>
               </div>
             )}
-
           </div>
         </div>
       </div>

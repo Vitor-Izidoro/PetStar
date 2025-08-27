@@ -7,14 +7,17 @@ import {
   FaEnvelope,
   FaPhone,
   FaBirthdayCake,
-  FaPlusCircle,
-  FaPlus,
+  FaUser,
+  FaBell,
+  FaLock,
+  FaCog
 } from "react-icons/fa";
-import ReservaList from "../Reserva/ReservaList";
-import PetList from "../Pets/PetList";
+import AccountSettings from "../Settings/AccountSettings";
+import NotficationSettings from "../Settings/NotificationSettings";
+import PrivacySettings from "../Settings/PrivacySettings";
 
 const UserProfile = () => {
-  const [activeTab, setActiveTab] = useState("pets");
+  const [activeTab, setActiveTab] = useState("account");
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -61,10 +64,6 @@ const UserProfile = () => {
               <FaStarHalfAlt />
               <span className="ml-2 text-gray-700">4.7</span>
             </div>
-
-            <button className="border border-blue-600 text-blue-600 px-4 py-1 rounded-lg text-sm hover:bg-blue-50 flex items-center mx-auto">
-              <FaPen className="mr-2" /> Editar Perfil
-            </button>
           </div>
 
           <div className="bg-white shadow-lg rounded-xl p-6">
@@ -94,43 +93,29 @@ const UserProfile = () => {
         <div className="lg:col-span-2">
           <div className="flex space-x-4 border-b mb-4">
             {[
-              { id: "pets", label: "Meus Pets" },
-              { id: "bookings", label: "Minhas Reservas" },
-              { id: "reviews", label: "Avaliações" },
-              { id: "settings", label: "Configurações" },
+              { id: "account", label: "Conta", icon: <FaUser /> },
+              { id: "notifications", label: "Notificações", icon: <FaBell /> },
+              { id: "privacy", label: "Privacidade", icon: <FaLock /> },
             ].map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`pb-2 px-3 ${
+                className={`flex items-center gap-2 px-4 py-2 w-full text-left hover:bg-gray-100 rounded-lg transition ${
                   activeTab === tab.id
                     ? "border-b-2 border-blue-600 text-blue-600 font-semibold"
                     : "text-gray-500 hover:text-blue-600"
                 }`}
               >
-                {tab.label}
+                
+                {tab.icon} {tab.label}
               </button>
             ))}
           </div>
 
           <div className="bg-white shadow-lg rounded-xl p-6">
-            {activeTab === "pets" && (
-              <PetList />
-            )}
-
-            {activeTab === "bookings" && (
-              <>
-                <ReservaList />
-              </>
-            )}
-
-            {activeTab === "reviews" && (
-              <h4 className="text-lg font-semibold">Minhas Avaliações</h4>
-            )}
-
-            {activeTab === "settings" && (
-              <h4 className="text-lg font-semibold">Configurações</h4>
-            )}
+            {activeTab === "account" && <AccountSettings />}
+            {activeTab === "notifications" && <NotficationSettings />}
+            {activeTab === "privacy" && <PrivacySettings />}
           </div>
         </div>
       </div>

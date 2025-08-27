@@ -3,16 +3,18 @@ import { AuthProvider } from './context/AuthContext';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './pages/UserAuth/Login';
 import Signup from './pages/UserAuth/Signup';
-import Home from './pages/Home';
-import HomeContent from './pages/HomeContent'
-import PetStarProfile from './pages/Cuidadores/PetStarProfile';
+import Home from './pages/Home/Home';
+import HomeContent from './pages/Home/HomeContent'
+import PetStarProfile from './pages/Caregivers/Caregiver';
 import PetProfile from './pages/Pets/PetProfile';
-import ReservationConfirmation from './pages/Reserva/ReservaConfirmation';
+import ReservationConfirmation from './pages/Reservations/Reservation';
 import UserProfile from './pages/Profile/UserProfile';
+import MonitoringList from './pages/PetMonitoring/MonitoringList';
 import PetMonitoring from './pages/PetMonitoring/PetMonitoring';
 import AccountRecovery from './pages/UserAuth/AccountRecovery';
-import ReservaList from './pages/Reserva/ReservaList';
-import PaymentPage from './pages/Pagamento/Pagamento';
+import ReservaList from './pages/Reservations/ReservationList';
+import PaymentPage from './pages/Payment/PaymentPage';
+import PetList from './pages/Pets/PetList';
 
 
 const App = () => {
@@ -29,13 +31,14 @@ const App = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/userProfile" element={<UserProfile />} />
             <Route path="/accountRecovery" element={<AccountRecovery />} />
+            <Route path="/reservations" element={<ReservaList />} />
+            <Route path="/pets" element={<PetList />} />
             <Route path="perfil-cuidador/:id" element={<PetStarProfile />} />
             <Route path="/petProfile" element={<PetProfile />} />
+            <Route path="/monitoramentos" element={<MonitoringList />} />
+            <Route path="/monitoramentos/:id" element={<PetMonitoring />} />
             <Route path="/payment" element={<PaymentPage />} />
           </Route>
-
-          <Route path="/reservaConfirmation" element={<ReservationConfirmation />} />
-          <Route path="/petMonitoring" element={<PetMonitoring />} />
         </Routes>
       </Router>
     </AuthProvider>

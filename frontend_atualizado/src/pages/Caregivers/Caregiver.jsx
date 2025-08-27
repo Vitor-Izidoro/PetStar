@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { FaPaw, FaMapMarkerAlt, FaStar, FaStarHalfAlt, FaHome, FaTree, FaCouch, FaShieldAlt, FaHeart } from "react-icons/fa";
-import ReservaForm from "../Reserva/ReservaForm";
+import ReservaForm from "../Reservations/ReservationForm";
 
 // Reutiliza os hosts do Cuidadores ou importe de um arquivo separado
 const hosts = [

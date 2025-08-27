@@ -66,9 +66,9 @@ export default function PetList() {
   };
 
   return (
-    <>
+    <div className="container mx-auto px-4 py-6">
       <div className="flex justify-between items-center mb-6">
-        <h4 className="text-lg font-semibold">Meus Pets</h4>
+        <h4 className="text-2xl font-bold mb-6">Meus Pets</h4>
         <button
           className="bg-blue-600 text-white px-4 py-2 rounded-lg flex items-center hover:bg-blue-700"
           onClick={() => {
@@ -145,6 +145,6 @@ export default function PetList() {
       <Modal isOpen={isFormOpen} onClose={() => setFormOpen(false)}>
         <PetForm pet={selectedPet} onSave={handleSavePet} />
       </Modal>
-    </>
+    </div>
   );
 }

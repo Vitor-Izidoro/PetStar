@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "../../components/Modal";
-import ReservaConfirmation from "./ReservaConfirmation";
+import ReservaConfirmation from "./Reservation";
 import { FaCreditCard } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
@@ -49,7 +49,7 @@ export default function ReservaList() {
   const filters = ["Todas", "Próximas", "Concluídas", "Canceladas"];
 
   return (
-    <div className="px-4 mt-8">
+    <div className="container mx-auto px-4 py-6">
       <h2 className="text-2xl font-bold mb-6">Minhas Reservas</h2>
 
       {/* Filtros */}
