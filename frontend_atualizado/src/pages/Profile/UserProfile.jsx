@@ -10,11 +10,12 @@ import {
   FaUser,
   FaBell,
   FaLock,
-  FaCog
+  FaBriefcase
 } from "react-icons/fa";
 import AccountSettings from "../Settings/AccountSettings";
 import NotficationSettings from "../Settings/NotificationSettings";
 import PrivacySettings from "../Settings/PrivacySettings";
+import ServiceSettings from "../Settings/ServiceSettings/ServiceSettings";
 
 const UserProfile = () => {
   const [activeTab, setActiveTab] = useState("account");
@@ -96,6 +97,7 @@ const UserProfile = () => {
               { id: "account", label: "Conta", icon: <FaUser /> },
               { id: "notifications", label: "Notificações", icon: <FaBell /> },
               { id: "privacy", label: "Privacidade", icon: <FaLock /> },
+              { id: "services", label: "Serviços", icon: <FaBriefcase /> },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -114,6 +116,7 @@ const UserProfile = () => {
 
           <div className="bg-white shadow-lg rounded-xl p-6">
             {activeTab === "account" && <AccountSettings />}
+            {activeTab === "services" && <ServiceSettings />}
             {activeTab === "notifications" && <NotficationSettings />}
             {activeTab === "privacy" && <PrivacySettings />}
           </div>

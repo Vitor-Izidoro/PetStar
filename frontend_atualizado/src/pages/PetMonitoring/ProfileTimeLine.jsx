@@ -1,7 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaStar, FaStarHalfAlt, FaPaperPlane } from "react-icons/fa";
 
-export default function ProfileTimeline({ pet, caregiver, timeline }) {
+export default function ProfileTimeline({ pet, caregiver, timeline: initialTimeline }) {
+  const [timeline, setTimeline] = useState(initialTimeline);
+  const [newItem, setNewItem] = useState({
+    title: "",
+    description: "",
+    time: "",
+    image: ""
+  });
+
+  const handleAddItem = (e) => {
+    e.preventDefault();
+    if (!newItem.title || !newItem.description) return;
+
+    setTimeline([...timeline, { ...newItem }]);
+    setNewItem({ title: "", description: "", time: "", image: "" });
+  };
+
   return (
     <div className="bg-white rounded-xl shadow p-6">
       <div className="flex justify-between items-center mb-4">
@@ -25,9 +41,7 @@ export default function ProfileTimeline({ pet, caregiver, timeline }) {
                 <FaStar key={i} />
               ))}
               {caregiver.rating % 1 !== 0 && <FaStarHalfAlt />}
-              <span className="ml-2 text-gray-700 font-semibold">
-                {caregiver.rating}
-              </span>
+              <span className="ml-2 text-gray-700 font-semibold">{caregiver.rating}</span>
             </div>
           </div>
         </div>
@@ -41,19 +55,57 @@ export default function ProfileTimeline({ pet, caregiver, timeline }) {
           />
           <div>
             <h5 className="font-semibold">{pet.name}</h5>
-            <p className="text-gray-500">
-              {pet.breed} • {pet.age}
-            </p>
+            <p className="text-gray-500">{pet.breed} • {pet.age}</p>
           </div>
         </div>
       </div>
 
       {/* Timeline */}
       <h4 className="font-bold mb-3">Linha do Tempo</h4>
-      <div className="space-y-6">
+      <div className="space-y-6 mb-6">
         {timeline.map((item, idx) => (
           <TimelineItem key={idx} {...item} />
         ))}
+      </div>
+
+      {/* Formulário para adicionar novo item */}
+      <div className="mt-6 mb-6">
+        <h4 className="font-bold mb-3">Adicionar novo item à linha do tempo</h4>
+        <form onSubmit={handleAddItem} className="space-y-2">
+          <input
+            type="text"
+            placeholder="Título"
+            value={newItem.title}
+            onChange={(e) => setNewItem({ ...newItem, title: e.target.value })}
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          <input
+            type="text"
+            placeholder="Horário (opcional)"
+            value={newItem.time}
+            onChange={(e) => setNewItem({ ...newItem, time: e.target.value })}
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          <textarea
+            placeholder="Descrição"
+            value={newItem.description}
+            onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          <input
+            type="text"
+            placeholder="URL da imagem (opcional)"
+            value={newItem.image}
+            onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 bg-indigo-700 text-white rounded-lg flex items-center gap-2 hover:bg-indigo-500 transition"
+          >
+            Adicionar
+          </button>
+        </form>
       </div>
 
       {/* Mensagem */}
@@ -80,7 +132,7 @@ function TimelineItem({ title, time, description, image }) {
       <div className="absolute -left-3 top-1 w-6 h-6 bg-indigo-700 rounded-full"></div>
       <div className="flex justify-between items-center">
         <h5 className="font-semibold">{title}</h5>
-        <small className="text-gray-500">{time}</small>
+        {time && <small className="text-gray-500">{time}</small>}
       </div>
       <p>{description}</p>
       {image && (

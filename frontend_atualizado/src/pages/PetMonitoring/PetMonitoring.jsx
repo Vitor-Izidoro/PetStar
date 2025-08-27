@@ -62,9 +62,6 @@ export default function PetMonitoring() {
   return (
     <div className="bg-gray-100 min-h-screen font-sans text-gray-800">
       <div className="container mx-auto mt-4 mb-10 px-4 lg:px-0">
-        <h2 className="text-2xl font-bold mb-6">
-          Ficha de {monitoring.pet.name}
-        </h2>
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="lg:w-2/3">
             <ProfileTimeline

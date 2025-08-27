@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { FaPaw, FaMapMarkerAlt, FaStar, FaStarHalfAlt, FaHome, FaTree, FaCouch, FaShieldAlt, FaHeart } from "react-icons/fa";
-import ReservaForm from "../Reservations/ReservationForm";
+import ReservaForm from "../Reservations/ReservationForm/ReservationForm";
 
 // Reutiliza os hosts do Cuidadores ou importe de um arquivo separado
 const hosts = [
@@ -25,17 +25,26 @@ const PetStarProfile = () => {
   }
 
   return (
-    <div className="container mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6 px-4">
+    <div className={`container mx-auto mt-6 px-4 ${openReserva ? "grid grid-cols-1 lg:grid-cols-3 gap-6" : "flex justify-center"}`}>
         {/* Perfil */}
-        <div className="lg:col-span-2">
+        <div className={`${openReserva ? "lg:col-span-2" : "w-full lg:w-2/3"}`}>
           <div className="bg-white rounded-xl shadow overflow-hidden mb-6">
             <div className="relative">
               <img src={host.img} alt={host.name} className="w-full h-72 object-cover" />
               <span className="absolute top-4 right-4 bg-indigo-600 text-white px-4 py-1 rounded-full font-semibold">{host.rating} ★</span>
             </div>
             <div className="p-6">
-              <h2 className="text-2xl font-bold">{host.name}</h2>
-              <p className="text-indigo-600 font-medium flex items-center gap-2 mb-2"><FaMapMarkerAlt /> {host.location}</p>
+              <div className="flex justify-between items-center mb-2">
+                <div>
+                    <h2 className="text-2xl font-bold">{host.name}</h2>
+                    <p className="text-indigo-600 font-medium flex items-center gap-2">
+                      <FaMapMarkerAlt /> {host.location}
+                    </p>
+                  </div>
+                  <button className="border border-indigo-600 text-indigo-600 px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-indigo-50">
+                    <FaHeart /> Favoritar
+                  </button>
+                </div>
               <p className="text-orange-500 font-bold text-lg mb-2">{host.price}</p>
               <div className="flex items-center text-yellow-500 mb-3">
                 {[...Array(Math.floor(host.rating))].map((_, i) => <FaStar key={i} />)}
@@ -44,8 +53,11 @@ const PetStarProfile = () => {
               </div>
               <p className="text-gray-600 mb-4">{host.description}</p>
               <div className="flex gap-3">
-                <button onClick={() => setOpenReserva(true)} className="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-500">Solicitar reserva</button>
-                <button className="border border-indigo-600 text-indigo-600 px-5 py-2 rounded-lg flex items-center gap-2 hover:bg-indigo-50"><FaHeart /> Favoritar</button>
+                {openReserva ? (
+                  <button onClick={() => setOpenReserva(false)} className="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-500">Cancelar reserva</button>
+                ): (
+                  <button onClick={() => setOpenReserva(true)} className="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-500">Solicitar reserva</button>
+                )}
               </div>
             </div>
           </div>
@@ -116,9 +128,11 @@ const PetStarProfile = () => {
         </div>
 
         {/* Sidebar Reserva */}
-        <div className="lg:col-span-1 space-y-6">
-          <ReservaForm host={host} />
-        </div>
+        {openReserva &&(
+          <div className="lg:col-span-1 space-y-6">
+            <ReservaForm host={host} />
+          </div>
+        )}
     </div>
   );
 };

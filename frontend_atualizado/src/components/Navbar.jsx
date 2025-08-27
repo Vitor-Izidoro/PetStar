@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaPaw, FaSignOutAlt } from "react-icons/fa";
+import { FaPaw, FaSignOutAlt, FaBell } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth"; // corrigi o path
 
@@ -33,6 +33,7 @@ export const testUsers = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuth();
+  const [showNotifications, setShowNotifications] = useState(false);
   
   const [currentUser, setCurrentUser] = useState(testUsers[0]);
 
@@ -107,6 +108,49 @@ const Navbar = () => {
 
             {!user && (
               <div className="flex items-center space-x-3">
+                {/* Ícone de notificação */}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowNotifications(!showNotifications)}
+                    className="relative p-3 bg-gray-100 rounded-full hover:bg-gray-200 transition shadow-md"
+                  >
+                    <FaBell className="text-gray-700 text-xl" /> {/* ícone maior */}
+                    <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-600 rounded-full border-2 border-white"></span>
+                  </button>
+
+                  {/* Dropdown de notificações */}
+                  {showNotifications && (
+                    <div className="absolute right-0 mt-3 w-72 bg-white border border-gray-200 rounded-xl shadow-lg z-50">
+                      <div className="p-4 font-semibold border-b border-gray-200 text-gray-800">
+                        Notificações
+                      </div>
+                      <ul className="max-h-64 overflow-y-auto">
+                        <li className="px-4 py-3 hover:bg-gray-50 border-b border-gray-100 cursor-pointer flex items-start gap-2">
+                          <FaPaw className="text-indigo-600 mt-1" />
+                          <div>
+                            <p className="text-gray-800 font-medium">Nova reserva recebida</p>
+                            <p className="text-gray-500 text-sm">Cliente solicitou hospedagem para Rex.</p>
+                          </div>
+                        </li>
+                        <li className="px-4 py-3 hover:bg-gray-50 border-b border-gray-100 cursor-pointer flex items-start gap-2">
+                          <FaPaw className="text-indigo-600 mt-1" />
+                          <div>
+                            <p className="text-gray-800 font-medium">Mensagem de Ana Silva</p>
+                            <p className="text-gray-500 text-sm">Ana comentou sobre a última visita do Thor.</p>
+                          </div>
+                        </li>
+                        <li className="px-4 py-3 hover:bg-gray-50 cursor-pointer flex items-start gap-2">
+                          <FaPaw className="text-indigo-600 mt-1" />
+                          <div>
+                            <p className="text-gray-800 font-medium">Reserva finalizada</p>
+                            <p className="text-gray-500 text-sm">O cuidado de Mimi terminou com sucesso.</p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  )}
+                </div>
+
                 <Link
                   to="/userProfile"
                   onClick={() => setIsOpen(false)}
