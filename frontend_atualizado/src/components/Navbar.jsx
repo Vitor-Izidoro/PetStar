@@ -55,10 +55,16 @@ const Navbar = () => {
               Inicio
             </Link>
             <Link
-              to="/reservations"
+              to="/reservationsClient"
               className="px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium transition-colors"
             >
               Minhas Reservas
+            </Link>
+            <Link
+              to="/reservationsCaregiver"
+              className="px-3 py-2 text-gray-700 hover:text-indigo-600 font-medium transition-colors"
+            >
+              Reservas Recebidas
             </Link>
             <Link
               to="/pets"

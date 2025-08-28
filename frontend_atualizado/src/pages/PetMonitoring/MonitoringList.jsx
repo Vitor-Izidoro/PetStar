@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaDog, FaUser, FaCalendarAlt, FaEye, FaInbox, FaSpinner } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { currentUser, monitoringsMock } from "./datamock";
+import monitoringsMock from "../../data/mockData/monitorings";
 import DataWrapper from "../../components/DataWrapper";
 
 const MonitoringList = () => {
@@ -27,25 +27,30 @@ const MonitoringList = () => {
 
   return (
     <div className="container mx-auto px-4 py-6">
-      <h2 className="text-2xl font-bold mb-6">Meus Monitoramentos</h2>
-      <div className="flex flex-wrap gap-2 mb-6">
-        {filters.map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`px-4 py-2 rounded-lg border border-indigo-600 ${filter === f ? "bg-indigo-600 text-white" : "text-indigo-600 hover:bg-indigo-50"}`}
-          >
-            {f}
-          </button>
-        ))}
-      </div>
+      {!isLoading && (
+        <>
+          <h2 className="text-2xl font-bold mb-6">Meus Monitoramentos</h2>
+          <div className="flex flex-wrap gap-2 mb-6">
+            {filters.map((f) => (
+              <button
+                key={f}
+                onClick={() => setFilter(f)}
+                className={`px-4 py-2 rounded-lg border border-indigo-600 ${filter === f ? "bg-indigo-600 text-white" : "text-indigo-600 hover:bg-indigo-50"}`}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+        </>
+      )}
 
       <DataWrapper
         isLoading={isLoading}
         data={filteredMonitorings}
         emptyTitle="Nenhum monitoramento encontrado"
+        LoadingTitle="Carregando monitoramentos..."
         emptyDescription="Você não possui monitoramentos nesse filtro."
-        onEmptyAction={() => {}}
+        onEmptyAction={fetchMonitorings}
         EmptyIcon={<FaInbox size={50} className="text-indigo-400 animate-bounce-slow" />}
         LoadingIcon={<FaSpinner size={50} className="text-indigo-400 animate-spin-slow" />}
       >

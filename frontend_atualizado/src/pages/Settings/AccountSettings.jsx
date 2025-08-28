@@ -1,4 +1,3 @@
-// AccountSettings.jsx
 import React, { useState } from "react";
 import { FaSave, FaLock, FaPhoneAlt, FaBirthdayCake, FaMapMarkerAlt, FaUser } from "react-icons/fa";
 

@@ -21,7 +21,7 @@ import Modal from "../../components/Modal";
 import GalleryList from "./GalleryList";
 
 const UserProfile = () => {
-  const [activeTab, setActiveTab] = useState("account");
+  const [activeTab, setActiveTab] = useState("gallery");
   const [isOpen, setIsOpen] = useState(false);
   const [avatar, setAvatar] = useState(
     "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=764&q=80"

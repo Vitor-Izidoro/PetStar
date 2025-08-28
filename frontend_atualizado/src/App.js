@@ -12,7 +12,8 @@ import UserProfile from './pages/Profile/UserProfile';
 import MonitoringList from './pages/PetMonitoring/MonitoringList';
 import PetMonitoring from './pages/PetMonitoring/PetMonitoring';
 import AccountRecovery from './pages/UserAuth/AccountRecovery';
-import ReservaList from './pages/Reservations/ReservationList';
+import ReservationClient from './pages/Reservations/ReservationsClient';
+import ReservationsCaregiver from './pages/Reservations/ReservationsCaregiver';
 import PaymentPage from './pages/Payment/PaymentPage';
 import PetList from './pages/Pets/PetList';
 
@@ -31,7 +32,8 @@ const App = () => {
             <Route path="/signup" element={<Signup />} />
             <Route path="/userProfile" element={<UserProfile />} />
             <Route path="/accountRecovery" element={<AccountRecovery />} />
-            <Route path="/reservations" element={<ReservaList />} />
+            <Route path="/reservationsClient" element={<ReservationClient />} />
+            <Route path="/reservationsCaregiver" element={<ReservationsCaregiver />} />
             <Route path="/pets" element={<PetList />} />
             <Route path="perfil-cuidador/:id" element={<CaregiverProfile />} />
             <Route path="/petProfile" element={<PetProfile />} />

@@ -1,13 +1,19 @@
+import React from "react";
 import {
   FaCheckCircle,
   FaClock,
   FaTimesCircle,
   FaMapMarkerAlt,
+  FaMoneyBill,
+  FaComments,
+  FaStar,
+  FaShare,
+  FaCalendar
 } from "react-icons/fa";
 
 const statusTimeline = ["pendente", "confirmada", "concluida", "cancelada"];
 
-const ReservaConfirmation = ({ reservation, status }) => {
+const ReservaConfirmation = ({ reservation, status, role = "client" }) => {
   const statusConfig = {
     confirmada: {
       icon: <FaCheckCircle className="text-green-600 inline mr-2" />,
@@ -28,6 +34,28 @@ const ReservaConfirmation = ({ reservation, status }) => {
   };
 
   const { icon, alertClass } = statusConfig[status] || statusConfig.pendente;
+
+  // labels mudam conforme o papel
+  const reservationDetails =
+    role === "client"
+      ? [
+          ["Cuidador:", reservation.caregiverName],
+          ["Serviço:", reservation.service],
+          ["Check-in:", reservation.checkIn],
+          ["Check-out:", reservation.checkOut],
+          ["Duração:", reservation.duration],
+          ["Pet:", `${reservation.petName} (${reservation.petBreed})`],
+          ["Total:", reservation.total],
+        ]
+      : [
+          ["Cliente:", reservation.clientName],
+          ["Serviço:", reservation.service],
+          ["Check-in:", reservation.checkIn],
+          ["Check-out:", reservation.checkOut],
+          ["Duração:", reservation.duration],
+          ["Pet:", `${reservation.petName} (${reservation.petBreed})`],
+          ["Total:", reservation.total],
+        ];
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4">
@@ -50,55 +78,13 @@ const ReservaConfirmation = ({ reservation, status }) => {
             <span>{reservation.message || "Acompanhe os detalhes da reserva."}</span>
           </div>
 
-          {/* Timeline */}
-          <div className="mb-6">
-            <h4 className="text-lg font-semibold mb-2">Status da Reserva</h4>
-            <div className="flex flex-col relative ml-4">
-              {statusTimeline.map((s, i) => {
-                const currentIndex = statusTimeline.indexOf(status);
-                const itemIndex = i;
-
-                const isCompleted = itemIndex < currentIndex;
-                const isActive = itemIndex === currentIndex;
-
-                const color = isActive
-                  ? "bg-blue-600"
-                  : isCompleted
-                  ? "bg-green-600"
-                  : "bg-gray-300";
-
-                return (
-                  <div key={i} className="flex items-center mb-4 relative">
-                    {i !== statusTimeline.length - 1 && (
-                      <div className="absolute left-1.5 top-6 h-full w-0.5 bg-gray-300"></div>
-                    )}
-                    <div
-                      className={`w-6 h-6 rounded-full flex items-center justify-center ${color} text-white z-10`}
-                    >
-                      {isCompleted ? "✓" : ""}
-                    </div>
-                    <span className="ml-3 capitalize">{s}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
           {/* Conteúdo principal */}
           <div className="flex flex-col md:flex-row gap-6">
             {/* Detalhes da reserva */}
             <div className="flex-1">
               <h4 className="text-lg font-semibold mb-4">Detalhes da reserva</h4>
               <div className="space-y-2 text-sm sm:text-base">
-                {[
-                  ["Cliente:", reservation.clientName],
-                  ["Serviço:", reservation.service],
-                  ["Check-in:", reservation.checkIn],
-                  ["Check-out:", reservation.checkOut],
-                  ["Duração:", reservation.duration],
-                  ["Pet:", `${reservation.petName} (${reservation.petBreed})`],
-                  ["Total:", reservation.total],
-                ].map(([label, value], i) => (
+                {reservationDetails.map(([label, value], i) => (
                   <div key={i} className="flex justify-between border-b pb-2">
                     <span>{label}</span>
                     <span className={label === "Total:" ? "font-bold" : ""}>
@@ -121,7 +107,7 @@ const ReservaConfirmation = ({ reservation, status }) => {
               <ul className="space-y-2 text-sm sm:text-base">
                 {reservation.nextSteps?.map((step, i) => (
                   <li key={i} className="flex items-center">
-                    {step.icon && <step.icon className="mr-2" />}
+                    {step.icon && React.createElement(step.icon, { className: "mr-2" })}
                     {step.text}
                   </li>
                 ))}

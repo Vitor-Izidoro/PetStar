@@ -62,19 +62,25 @@ const CaregiverPage = () => {
 
         <section className="lg:col-span-3">
           <div className="flex flex-col md:flex-row justify-between items-center mb-6">
-            <span className="font-semibold text-gray-800">{filteredHosts.length} anfitriões encontrados</span>
-            <button
-              onClick={() => setOpenFilter(!openFilter)}
-              className={`${openFilter ? "bg-red-600 hover:bg-red-500" : "bg-indigo-600 hover:bg-indigo-500"} text-white px-5 py-2 rounded-lg flex items-center`}
-            >
-              <FaFilter /> {openFilter ? "Fechar Filtro" : "Ajustar Filtro"}
-            </button>
+            {!isLoading && (
+              <>
+              <span className="font-semibold text-gray-800">{filteredHosts.length} anfitriões encontrados</span>
+              <button
+                onClick={() => setOpenFilter(!openFilter)}
+                className={`${openFilter ? "bg-red-600 hover:bg-red-500" : "bg-indigo-600 hover:bg-indigo-500"} text-white px-5 py-2 rounded-lg flex items-center`}
+              >
+                <FaFilter /> {openFilter ? "Fechar Filtro" : "Ajustar Filtro"}
+              </button>
+              </>
+            )}
+            
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             <DataWrapper
               isLoading={isLoading}
               data={filteredHosts}
               emptyTitle="Nenhum cuidador encontrado"
+              LoadingTitle="Carregando cuidadores..."
               emptyDescription="Parece que não há cuidadores disponíveis no momento."
               onEmptyAction={fetchCaregivers}
               EmptyIcon={<FaInbox size={50} className="text-indigo-400 animate-bounce-slow" />}

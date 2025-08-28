@@ -5,7 +5,8 @@ import LoadingState from "./LoadingState";
 const DataWrapper = ({ 
   isLoading, 
   data, 
-  emptyTitle, 
+  emptyTitle,
+  LoadingTitle, 
   emptyDescription, 
   onEmptyAction, 
   EmptyIcon, 
@@ -16,7 +17,7 @@ const DataWrapper = ({
     return (
       <div className="flex justify-center items-center min-h-[300px]">
         <LoadingState
-            title="Carregando reservas..."
+            title={LoadingTitle}
             description="Por favor, aguarde enquanto buscamos os dados."
             icon={LoadingIcon}
         />
