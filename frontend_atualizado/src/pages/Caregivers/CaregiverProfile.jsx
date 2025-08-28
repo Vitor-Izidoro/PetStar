@@ -2,16 +2,9 @@ import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { FaPaw, FaMapMarkerAlt, FaStar, FaStarHalfAlt, FaHome, FaTree, FaCouch, FaShieldAlt, FaHeart } from "react-icons/fa";
 import ReservaForm from "../Reservations/ReservationForm/ReservationForm";
+import hosts from "./hostsData";
 
-// Reutiliza os hosts do Cuidadores ou importe de um arquivo separado
-const hosts = [
-  { id: "1", name: "Ana Silva", rating: 4.9, location: "Vila Madalena, São Paulo", img: "...", features: ["Quintal", "Cães grandes"], description: "...", price: "R$ 40/noite", reviews: 12 },
-  { id: "2", name: "Carlos Oliveira", rating: 4.8, location: "Jardins, São Paulo", img: "...", features: ["Veterinário"], description: "...", price: "R$ 45/noite", reviews: 8 },
-  { id: "3", name: "Marina Costa", rating: 5.0, location: "Pinheiros, São Paulo", img: "...", features: ["Gatos"], description: "...", price: "R$ 50/noite", reviews: 20 },
-  { id: "4", name: "Roberto Alves", rating: 4.7, location: "Moema, São Paulo", img: "...", features: ["Passeios"], description: "...", price: "R$ 35/noite", reviews: 15 }
-];
-
-const PetStarProfile = () => {
+const CaregiverProfile = () => {
   const { id } = useParams();
   const location = useLocation();
   const stateHost = location.state?.host;
@@ -130,11 +123,11 @@ const PetStarProfile = () => {
         {/* Sidebar Reserva */}
         {openReserva &&(
           <div className="lg:col-span-1 space-y-6">
-            <ReservaForm host={host} />
+            <ReservaForm host={host} onClose={() => setOpenReserva(false)} />
           </div>
         )}
     </div>
   );
 };
 
-export default PetStarProfile;
+export default CaregiverProfile;

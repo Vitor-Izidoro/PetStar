@@ -1,6 +1,3 @@
-// components/ReservaForm/Step2SelectPets.jsx
-import React from "react";
-
 const Step2SelectPets = ({ userPets, selectedPets, setSelectedPets, setStep }) => {
   const handlePetSelection = (petId) => {
     if (selectedPets.includes(petId)) {

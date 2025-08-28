@@ -2,10 +2,10 @@ import React from 'react';
 import { AuthProvider } from './context/AuthContext';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from './pages/UserAuth/Login';
-import Signup from './pages/UserAuth/Signup';
+import Signup from './pages/UserAuth/Signup/Signup';
 import Home from './pages/Home/Home';
 import HomeContent from './pages/Home/HomeContent'
-import PetStarProfile from './pages/Caregivers/Caregiver';
+import CaregiverProfile from './pages/Caregivers/CaregiverProfile';
 import PetProfile from './pages/Pets/PetProfile';
 import ReservationConfirmation from './pages/Reservations/Reservation';
 import UserProfile from './pages/Profile/UserProfile';
@@ -33,7 +33,7 @@ const App = () => {
             <Route path="/accountRecovery" element={<AccountRecovery />} />
             <Route path="/reservations" element={<ReservaList />} />
             <Route path="/pets" element={<PetList />} />
-            <Route path="perfil-cuidador/:id" element={<PetStarProfile />} />
+            <Route path="perfil-cuidador/:id" element={<CaregiverProfile />} />
             <Route path="/petProfile" element={<PetProfile />} />
             <Route path="/monitoramentos" element={<MonitoringList />} />
             <Route path="/monitoramentos/:id" element={<PetMonitoring />} />

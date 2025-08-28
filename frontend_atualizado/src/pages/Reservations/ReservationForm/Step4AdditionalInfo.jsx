@@ -1,6 +1,3 @@
-// components/ReservaForm/Step4AdditionalInfo.jsx
-import React from "react";
-
 const Step4AdditionalInfo = ({
   emergencyContact, setEmergencyContact, vetInfo, setVetInfo,
   specialInstructions, setSpecialInstructions, foodInstructions, setFoodInstructions,

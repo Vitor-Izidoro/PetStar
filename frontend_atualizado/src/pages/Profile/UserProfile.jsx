@@ -10,16 +10,22 @@ import {
   FaUser,
   FaBell,
   FaLock,
-  FaBriefcase
+  FaBriefcase,
+  FaTimes
 } from "react-icons/fa";
 import AccountSettings from "../Settings/AccountSettings";
 import NotficationSettings from "../Settings/NotificationSettings";
 import PrivacySettings from "../Settings/PrivacySettings";
 import ServiceSettings from "../Settings/ServiceSettings/ServiceSettings";
+import Modal from "../../components/Modal";
+import GalleryList from "./GalleryList";
 
 const UserProfile = () => {
   const [activeTab, setActiveTab] = useState("account");
   const [isOpen, setIsOpen] = useState(false);
+  const [avatar, setAvatar] = useState(
+    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=764&q=80"
+  );
 
   return (
     <div className="container mx-auto mt-6 mb-10 px-4" id="page-content">
@@ -29,11 +35,14 @@ const UserProfile = () => {
           <div className="bg-white shadow-lg rounded-xl p-6 text-center">
             <div className="relative inline-block mb-3">
               <img
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=764&q=80"
+                src={avatar}
                 alt="Avatar"
                 className="w-32 h-32 rounded-full object-cover mx-auto"
               />
-              <button className="absolute bottom-2 right-2 bg-blue-600 text-white p-2 rounded-full shadow hover:bg-blue-700">
+              <button
+                onClick={() => setIsOpen(true)}
+                className="absolute bottom-2 right-2 bg-blue-600 text-white p-2 rounded-full shadow hover:bg-blue-700"
+              >
                 <FaPen />
               </button>
             </div>
@@ -68,13 +77,10 @@ const UserProfile = () => {
           </div>
 
           <div className="bg-white shadow-lg rounded-xl p-6">
-            <h5 className="font-semibold text-lg mb-4">
-              Informações de Contato
-            </h5>
+            <h5 className="font-semibold text-lg mb-4">Informações de Contato</h5>
             <ul className="space-y-2 text-gray-700 text-sm">
               <li className="flex items-center">
-                <FaEnvelope className="mr-2 text-blue-600" />{" "}
-                laura.mendes@exemplo.com
+                <FaEnvelope className="mr-2 text-blue-600" /> laura.mendes@exemplo.com
               </li>
               <li className="flex items-center">
                 <FaPhone className="mr-2 text-blue-600" /> (11) 98765-4321
@@ -83,8 +89,7 @@ const UserProfile = () => {
                 <FaBirthdayCake className="mr-2 text-blue-600" /> 15/05/1985
               </li>
               <li className="flex items-center">
-                <FaMapMarkerAlt className="mr-2 text-blue-600" /> Rua das
-                Flores, 123 - Jardins, São Paulo - SP
+                <FaMapMarkerAlt className="mr-2 text-blue-600" /> Rua das Flores, 123 - Jardins, São Paulo - SP
               </li>
             </ul>
           </div>
@@ -94,7 +99,7 @@ const UserProfile = () => {
         <div className="lg:col-span-2">
           <div className="flex space-x-4 border-b mb-4">
             {[
-              { id: "account", label: "Conta", icon: <FaUser /> },
+              { id: "gallery", label: "Galeria", icon: <FaUser /> },
               { id: "notifications", label: "Notificações", icon: <FaBell /> },
               { id: "privacy", label: "Privacidade", icon: <FaLock /> },
               { id: "services", label: "Serviços", icon: <FaBriefcase /> },
@@ -108,20 +113,30 @@ const UserProfile = () => {
                     : "text-gray-500 hover:text-blue-600"
                 }`}
               >
-                
                 {tab.icon} {tab.label}
               </button>
             ))}
           </div>
 
           <div className="bg-white shadow-lg rounded-xl p-6">
-            {activeTab === "account" && <AccountSettings />}
+            {activeTab === "gallery" && <GalleryList />}
             {activeTab === "services" && <ServiceSettings />}
             {activeTab === "notifications" && <NotficationSettings />}
             {activeTab === "privacy" && <PrivacySettings />}
           </div>
         </div>
       </div>
+
+      {/* Modal */}
+      {isOpen && (
+        <Modal 
+          isOpen={isOpen} 
+          onClose={() => setIsOpen(false)}
+        >
+          <AccountSettings avatar={avatar} setAvatar={setAvatar} />
+        </Modal>
+      )}
+            
     </div>
   );
 };

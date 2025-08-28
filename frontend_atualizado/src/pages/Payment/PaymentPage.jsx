@@ -53,7 +53,7 @@ export default function PaymentPage() {
               </p>
               <div className="flex flex-col gap-2">
                 <button
-                  onClick={() => navigate("/perfil")}
+                  onClick={() => navigate("/reservations")}
                   className="bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-500"
                 >
                   Ver Minhas Reservas

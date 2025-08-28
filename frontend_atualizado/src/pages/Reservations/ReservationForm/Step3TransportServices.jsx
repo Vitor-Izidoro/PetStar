@@ -1,6 +1,3 @@
-// components/ReservaForm/Step3TransportServices.jsx
-import React from "react";
-
 const Step3TransportServices = ({
   transportOption, setTransportOption, address, setAddress,
   availableServices, additionalServices, setAdditionalServices, setStep

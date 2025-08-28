@@ -1,6 +1,3 @@
-// components/ReservaForm/Step5Verification.jsx
-import React from "react";
-
 const Step5Verification = ({
   service, startDate, endDate, startTime, endTime, selectedPets, userPets,
   transportOption, address, additionalServices, availableServices, emergencyContact,

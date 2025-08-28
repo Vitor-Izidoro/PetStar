@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaStar, FaStarHalfAlt, FaPaperPlane } from "react-icons/fa";
 
-export default function ProfileTimeline({ pet, caregiver, timeline: initialTimeline }) {
+export default function ProfileTimeline({ pet,  owner,  caregiver, timeline: initialTimeline, currentUser }) {
   const [timeline, setTimeline] = useState(initialTimeline);
   const [newItem, setNewItem] = useState({
     title: "",
@@ -68,60 +68,62 @@ export default function ProfileTimeline({ pet, caregiver, timeline: initialTimel
         ))}
       </div>
 
-      {/* Formulário para adicionar novo item */}
-      <div className="mt-6 mb-6">
-        <h4 className="font-bold mb-3">Adicionar novo item à linha do tempo</h4>
-        <form onSubmit={handleAddItem} className="space-y-2">
-          <input
-            type="text"
-            placeholder="Título"
-            value={newItem.title}
-            onChange={(e) => setNewItem({ ...newItem, title: e.target.value })}
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          <input
-            type="text"
-            placeholder="Horário (opcional)"
-            value={newItem.time}
-            onChange={(e) => setNewItem({ ...newItem, time: e.target.value })}
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          <textarea
-            placeholder="Descrição"
-            value={newItem.description}
-            onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          <input
-            type="text"
-            placeholder="URL da imagem (opcional)"
-            value={newItem.image}
-            onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
-            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          <button
-            type="submit"
-            className="px-4 py-2 bg-indigo-700 text-white rounded-lg flex items-center gap-2 hover:bg-indigo-500 transition"
-          >
-            Adicionar
-          </button>
-        </form>
-      </div>
-
-      {/* Mensagem */}
-      <div className="mt-6">
-        <h4 className="font-bold mb-3">Enviar mensagem para o cuidador</h4>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            placeholder="Digite sua mensagem..."
-            className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-          />
-          <button className="px-4 py-2 bg-indigo-700 text-white rounded-lg flex items-center gap-2 hover:bg-indigo-500 transition">
-            <FaPaperPlane /> Enviar
-          </button>
+      {caregiver === currentUser && (
+        <div className="mt-6 mb-6">
+          <h4 className="font-bold mb-3">Adicionar novo item à linha do tempo</h4>
+          <form onSubmit={handleAddItem} className="space-y-2">
+            <input
+              type="text"
+              placeholder="Título"
+              value={newItem.title}
+              onChange={(e) => setNewItem({ ...newItem, title: e.target.value })}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <input
+              type="text"
+              placeholder="Horário (opcional)"
+              value={newItem.time}
+              onChange={(e) => setNewItem({ ...newItem, time: e.target.value })}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <textarea
+              placeholder="Descrição"
+              value={newItem.description}
+              onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <input
+              type="text"
+              placeholder="URL da imagem (opcional)"
+              value={newItem.image}
+              onChange={(e) => setNewItem({ ...newItem, image: e.target.value })}
+              className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 bg-indigo-700 text-white rounded-lg flex items-center gap-2 hover:bg-indigo-500 transition"
+            >
+              Adicionar
+            </button>
+          </form>
         </div>
-      </div>
+      )} 
+      {owner.name ===  currentUser.name && (
+        <div className="mt-6">
+          <h4 className="font-bold mb-3">Enviar mensagem para o cuidador</h4>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="Digite sua mensagem..."
+              className="flex-1 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <button className="px-4 py-2 bg-indigo-700 text-white rounded-lg flex items-center gap-2 hover:bg-indigo-500 transition">
+              <FaPaperPlane /> Enviar
+            </button>
+          </div>
+        </div>
+      )}
+  
     </div>
   );
 }

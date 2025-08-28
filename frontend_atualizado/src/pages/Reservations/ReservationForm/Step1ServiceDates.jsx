@@ -1,6 +1,3 @@
-// components/ReservaForm/Step1ServiceDates.jsx
-import React from "react";
-
 const Step1ServiceDates = ({
   service, setService, startDate, setStartDate, endDate, setEndDate,
   startTime, setStartTime, endTime, setEndTime, setStep

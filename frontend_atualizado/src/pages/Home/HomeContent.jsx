@@ -1,11 +1,11 @@
 import { useAuth } from "../../hooks/useAuth";
 import Inicio from "./LandingPage";
-import Caregivers from "../Caregivers/CaregiverList";
+import CaregiverPage from "../Caregivers/CaregiverPage";
 
 const HomeContent = () => {
   const { user } = useAuth();
 
-  return !user ? <Caregivers /> : <Inicio />;
+  return !user ? <CaregiverPage /> : <Inicio />;
 };
 
 export default HomeContent;

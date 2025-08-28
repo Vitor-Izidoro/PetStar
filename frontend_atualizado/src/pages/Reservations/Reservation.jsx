@@ -1,13 +1,8 @@
-import React from "react";
 import {
   FaCheckCircle,
   FaClock,
   FaTimesCircle,
   FaMapMarkerAlt,
-  FaComment,
-  FaCreditCard,
-  FaCalendarDay,
-  FaQuestionCircle,
 } from "react-icons/fa";
 
 const statusTimeline = ["pendente", "confirmada", "concluida", "cancelada"];
@@ -74,11 +69,9 @@ const ReservaConfirmation = ({ reservation, status }) => {
 
                 return (
                   <div key={i} className="flex items-center mb-4 relative">
-                    {/* Linha vertical */}
                     {i !== statusTimeline.length - 1 && (
                       <div className="absolute left-1.5 top-6 h-full w-0.5 bg-gray-300"></div>
                     )}
-                    {/* Marcador */}
                     <div
                       className={`w-6 h-6 rounded-full flex items-center justify-center ${color} text-white z-10`}
                     >
@@ -98,7 +91,7 @@ const ReservaConfirmation = ({ reservation, status }) => {
               <h4 className="text-lg font-semibold mb-4">Detalhes da reserva</h4>
               <div className="space-y-2 text-sm sm:text-base">
                 {[
-                  ["Anfitrião:", reservation.hostName],
+                  ["Cliente:", reservation.clientName],
                   ["Serviço:", reservation.service],
                   ["Check-in:", reservation.checkIn],
                   ["Check-out:", reservation.checkOut],
@@ -123,17 +116,6 @@ const ReservaConfirmation = ({ reservation, status }) => {
                 <FaMapMarkerAlt className="text-blue-600 mr-2" />
                 {reservation.location}
               </p>
-              {reservation.mapEmbed && (
-                <div className="w-full aspect-video mb-4">
-                  <iframe
-                    src={reservation.mapEmbed}
-                    style={{ border: 0, borderRadius: "8px" }}
-                    allowFullScreen
-                    loading="lazy"
-                    className="w-full h-full"
-                  ></iframe>
-                </div>
-              )}
 
               <h4 className="text-lg font-semibold mb-4">Próximos passos</h4>
               <ul className="space-y-2 text-sm sm:text-base">
