@@ -1,0 +1,11 @@
+O que falta fazer??
+
+    Código está pronto +/- -> Falta:
+                                Colocar o frontend para ficar agradável
+                                Algumas rotas foram feitas /perfil usuário, página de cadastro, estrelas, avaliação, etc
+                                Terminar e configurar essas rotas -> <React-Router> e <Navigate /perfil > Invés de usar useState
+
+
+
+
+                                

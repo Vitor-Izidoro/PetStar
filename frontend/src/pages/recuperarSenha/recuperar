@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetStar - Encontre cuidadores para seu pet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4e54c8;
+            --primary-light: #7b7fdb;
+            --secondary: #ff9a44;
+            --secondary-light: #ffb277;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --border-radius: 12px;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background-color: #f1f3f5;
+        }
+        
+        /* Navbar */
+        .navbar {
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-size: 1.8rem;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+        }
+        
+        /* Botões */
+        .btn-primary {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-light);
+            border-color: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78, 84, 200, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--secondary-light);
+            border-color: var(--secondary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 154, 68, 0.3);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary);
+            border-color: var(--primary);
+            font-weight: 600;
+            border-radius: 8px;
+            padding: 10px 20px;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        /* Seções */
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--primary);
+            margin: 15px 0;
+            border-radius: 2px;
+        }
+        
+        .section-padding {
+            padding: 60px 0;
+        }
+        
+        /* Cards */
+        .profile-card {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+        
+        .profile-header {
+            position: relative;
+        }
+        
+        .profile-img {
+            height: 300px;
+            object-fit: cover;
+            width: 100%;
+        }
+        
+        .profile-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        
+        .profile-content {
+            padding: 25px;
+        }
+        
+        .profile-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .profile-location {
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .profile-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+        
+        .rating {
+            color: #ffc107;
+            margin-bottom: 15px;
+        }
+        
+        /* Tabs */
+        .nav-tabs .nav-link {
+            padding: 15px 20px;
+            font-weight: 600;
+            color: var(--gray);
+            border: none;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary);
+            background: transparent;
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .nav-tabs {
+            border-bottom: 1px solid #dee2e6;
+            margin-bottom: 30px;
+        }
+        
+        /* Icons list */
+        .icon-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .icon-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .icon-list i {
+            width: 30px;
+            height: 30px;
+            background: rgba(78, 84, 200, 0.1);
+            color: var(--primary);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 15px;
+        }
+        
+        /* Payment */
+        .payment-card {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: none;
+        }
+        
+        .payment-card .card-header {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            padding: 15px 20px;
+        }
+        
+        .payment-card .card-body {
+            padding: 25px;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        
+        .form-select, .form-control {
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .price-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .price-total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-top: 2px solid #eee;
+            padding-top: 15px;
+            margin-top: 15px;
+        }
+        
+        /* User profile */
+        .user-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .edit-icon {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .pet-card {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            height: 100%;
+        }
+        
+        .pet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+        
+        .pet-card img {
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .add-pet-card {
+            border: 2px dashed #ddd;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100%;
+            min-height: 300px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .add-pet-card:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        /* Modal */
+        .modal-content {
+            border-radius: var(--border-radius);
+            border: none;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .profile-img {
+                height: 250px;
+            }
+            
+            .user-avatar {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-paw text-primary me-2"></i>PetStar
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Como funciona</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Para Donos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Para Anfitriões</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Ajuda</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <a href="#" class="btn btn-outline-primary me-2">Entrar</a>
+                    <a href="#" class="btn btn-primary">Cadastrar</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo das páginas (será alternado via JavaScript) -->
+    <div class="container mt-4 mb-5" id="page-content">
+   <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card recovery-card profile-card">
+                            <div class="card-body text-center p-5">
+                                <i class="fas fa-lock text-primary mb-4" style="font-size: 3rem;"></i>
+                                <h2 class="section-title">Recuperação de Conta</h2>
+                                <p class="text-muted mb-4">Informe seu e-mail para recuperar o acesso à sua conta</p>
+                                
+                                <form>
+                                    <div class="mb-4">
+                                        <label class="form-label">E-mail cadastrado</label>
+                                        <input type="email" class="form-control" placeholder="seu@email.com">
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary w-100 mb-3">Enviar Link de Recuperação</button>
+                                    
+                                    <div class="text-center mt-4">
+                                        <p>Lembrou sua senha? <a href="#" class="text-primary">Fazer login</a></p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div class="card recovery-card profile-card mt-4">
+                            <div class="card-body">
+                                <h5 class="card-title mb-3">Problemas para acessar?</h5>
+                                <ul class="icon-list">
+                                    <li><i class="fas fa-envelope"></i> contato@petstar.com.br</li>
+                                    <li><i class="fas fa-phone"></i> (11) 3456-7890</li>
+                                    <li><i class="fas fa-comments"></i> Chat online</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5">
+                    <h5 class="footer-title">PetStar</h5>
+                    <p>A melhor plataforma para encontrar cuidadores para seu pet com confiança e segurança.</p>
+                    <div class="mt-4">
+                        <button class="app-download-btn">
+                            <i class="fab fa-apple"></i>
+                            <span>Baixe na</span>
+                            <strong>App Store</strong>
+                        </button>
+                        <button class="app-download-btn">
+                            <i class="fab fa-google-play"></i>
+                            <span>Disponível no</span>
+                            <strong>Google Play</strong>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-5">
+                    <h5 class="footer-title">Links</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Como funciona</a></li>
+                        <li><a href="#">Para Donos</a></li>
+                        <li><a href="#">Para Anfitriões</a></li>
+                        <li><a href="#">Ajuda</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-4 mb-5">
+                    <h5 class="footer-title">Legal</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Termos de uso</a></li>
+                        <li><a href="#">Política de privacidade</a></li>
+                        <li><a href="#">Cookies</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4 mb-5">
+                    <h5 class="footer-title">Contato</h5>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope me-2"></i> contato@petstar.com.br</li>
+                        <li><i class="fas fa-phone me-2"></i> (11) 3456-7890</li>
+                        <li><i class="fas fa-map-marker-alt me-2"></i> São Paulo, Brasil</li>
+                    </ul>
+                    <div class="mt-4">
+                        <a href="#" class="btn btn-outline-light me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="btn btn-outline-light me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="btn btn-outline-light me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="btn btn-outline-light"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="footer-divider">
+            <div class="text-center">
+                <p class="mb-0">© 2023 PetStar. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal para edição de perfil -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Perfil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="text-center mb-4">
+                            <div class="position-relative d-inline-block">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80" 
+                                     class="user-avatar" alt="Avatar">
+                                <div class="edit-icon">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nome</label>
+                                <input type="text" class="form-control" value="Laura Mendes">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">E-mail</label>
+                                <input type="email" class="form-control" value="laura.mendes@exemplo.com">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Telefone</label>
+                                <input type="tel" class="form-control" value="(11) 98765-4321">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Data de Nascimento</label>
+                                <input type="date" class="form-control" value="1985-05-15">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Endereço</label>
+                                <input type="text" class="form-control" value="Rua das Flores, 123 - Jardins">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Cidade</label>
+                                <input type="text" class="form-control" value="São Paulo">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Estado</label>
+                                <select class="form-select">
+                                    <option selected>SP</option>
+                                    <option>RJ</option>
+                                    <option>MG</option>
+                                    <option>RS</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Sobre mim</label>
+                                <textarea class="form-control" rows="3">Amo animais e tenho dois cachorros. Sempre busco os melhores cuidados para eles.</textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Salvar Alterações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para adicionar pet -->
+    <div class="modal fade" id="addPetModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar Pet</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="text-center mb-4">
+                            <div class="position-relative d-inline-block">
+                                <img src="https://images.unsplash.com/photo-1560807707-8cc77767d783?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80" 
+                                     class="user-avatar" alt="Pet" style="object-fit: cover;">
+                                <div class="edit-icon">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Nome do Pet</label>
+                                <input type="text" class="form-control" placeholder="Ex: Thor">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Espécie</label>
+                                <select class="form-select">
+                                    <option selected>Cachorro</option>
+                                    <option>Gato</option>
+                                    <option>Pássaro</option>
+                                    <option>Outro</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Raça</label>
+                                <input type="text" class="form-control" placeholder="Ex: Golden Retriever">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Idade</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="Ex: 3">
+                                    <span class="input-group-text">anos</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Peso</label>
+                                <div class="input-group">
+                                    <input type="number" class="form-control" placeholder="Ex: 25">
+                                    <span class="input-group-text">kg</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Sexo</label>
+                                <select class="form-select">
+                                    <option selected>Macho</option>
+                                    <option>Fêmea</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Cuidados Especiais</label>
+                                <textarea class="form-control" rows="3" placeholder="Alergias, medicamentos, restrições alimentares..."></textarea>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label class="form-label">Personalidade</label>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="brincalhao">
+                                        <label class="form-check-label" for="brincalhao">Brincalhão</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="calmo">
+                                        <label class="form-check-label" for="calmo">Calmo</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="amigavel">
+                                        <label class="form-check-label" for="amigavel">Amigável</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="timido">
+                                        <label class="form-check-label" for="timido">Tímido</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="ativo">
+                                        <label class="form-check-label" for="ativo">Ativo</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Adicionar Pet</button>
+                </div>
+            </div>
+        </div>
+    </div>

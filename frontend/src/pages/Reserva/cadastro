@@ -1,0 +1,116 @@
+<div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="card profile-card mb-4">
+                            <div class="card-body">
+                                <h2 class="section-title">Cadastro de Reserva</h2>
+                                <p class="text-muted mb-4">Preencha os dados abaixo para realizar uma nova reserva</p>
+                                
+                                <form>
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <h4 class="mb-3">Informações do Pet</h4>
+                                            <div class="mb-3">
+                                                <label class="form-label">Selecionar Pet</label>
+                                                <select class="form-select">
+                                                    <option selected>Selecione um pet...</option>
+                                                    <option>Thor (Golden Retriever)</option>
+                                                    <option>Luna (SRD)</option>
+                                                    <option>+ Adicionar novo pet</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Tipo de Serviço</label>
+                                                <select class="form-select">
+                                                    <option selected>Selecione o serviço...</option>
+                                                    <option>Hospedagem</option>
+                                                    <option>Creche</option>
+                                                    <option>Passeio</option>
+                                                    <option>Visita em domicílio</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <h4 class="mb-3">Datas</h4>
+                                            <div class="mb-3">
+                                                <label class="form-label">Data de Entrada</label>
+                                                <input type="date" class="form-control">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Data de Saída</label>
+                                                <input type="date" class="form-control">
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Horário</label>
+                                                <select class="form-select">
+                                                    <option>Manhã (8h-12h)</option>
+                                                    <option>Tarde (13h-17h)</option>
+                                                    <option>Noite (18h-22h)</option>
+                                                    <option>Horário combinado</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mb-4">
+                                        <div class="col-12">
+                                            <h4 class="mb-3">Instruções Especiais</h4>
+                                            <div class="mb-3">
+                                                <label class="form-label">Informações importantes sobre o pet</label>
+                                                <textarea class="form-control" rows="3" placeholder="Alergias, medicamentos, comportamentos específicos, etc."></textarea>
+                                            </div>
+                                            
+                                            <div class="mb-3">
+                                                <label class="form-label">Itens que serão fornecidos</label>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="food">
+                                                    <label class="form-check-label" for="food">Ração/Comida</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="meds">
+                                                    <label class="form-check-label" for="meds">Medicamentos</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="toys">
+                                                    <label class="form-check-label" for="toys">Brinquedos</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" id="bed">
+                                                    <label class="form-check-label" for="bed">Cama/Cobertor</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h4 class="mb-3">Contato de Emergência</h4>
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Nome para emergência</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label">Telefone para emergência</label>
+                                                    <input type="tel" class="form-control">
+                                                </div>
+                                                <div class="col-12 mb-3">
+                                                    <label class="form-label">Veterinário de preferência</label>
+                                                    <input type="text" class="form-control" placeholder="Nome e telefone do veterinário">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                                        <button type="button" class="btn btn-secondary me-md-2">Cancelar</button>
+                                        <button type="submit" class="btn btn-primary">Solicitar Reserva</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
