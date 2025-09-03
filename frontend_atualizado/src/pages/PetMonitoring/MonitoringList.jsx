@@ -3,6 +3,7 @@ import { FaDog, FaUser, FaCalendarAlt, FaEye, FaInbox, FaSpinner } from "react-i
 import { Link } from "react-router-dom";
 import monitoringsMock from "../../data/mockData/monitorings";
 import DataWrapper from "../../components/DataWrapper";
+import NavLinkButton from "../../components/NavLinkButton/NavLinkButton";
 
 const MonitoringList = () => {
   const [monitorings, setMonitorings] = useState([]);
@@ -74,9 +75,9 @@ const MonitoringList = () => {
                 <p className={`text-sm font-medium ${item.pet.status === "Em andamento" ? "text-blue-600" : item.pet.status === "Confirmado" ? "text-green-600" : "text-gray-500"}`}>
                   {item.pet.status}
                 </p>
-                <Link to={`/monitoramentos/${item.id}`} className="mt-3 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2">
+                <NavLinkButton to={`/monitoramentos/${item.id}`} className="mt-3 w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 flex items-center justify-center gap-2">
                   <FaEye /> Ver ficha
-                </Link>
+                </NavLinkButton>
               </div>
             </div>
           ))}

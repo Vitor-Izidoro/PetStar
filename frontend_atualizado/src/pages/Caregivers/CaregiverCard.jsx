@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import NavLinkButton from "../../components/NavLinkButton/NavLinkButton";
 
 const CaregiverCard = ({ host }) => {
   return (
@@ -26,13 +26,14 @@ const CaregiverCard = ({ host }) => {
         <p className="text-gray-600 text-sm mb-3 flex-1">{host.description}</p>
         <p className="text-orange-500 font-bold mb-4">R$ {host.price}/noite</p>
 
-        <Link
+        <NavLinkButton
           to={`/perfil-cuidador/${host.id}`}
           state={{ host }}
-          className="block text-center bg-indigo-600 text-white rounded-lg py-2 hover:bg-indigo-700"
+          variant="primary"
+          size="md"
         >
           Ver perfil
-        </Link>
+        </NavLinkButton>
       </div>
     </div>
   );

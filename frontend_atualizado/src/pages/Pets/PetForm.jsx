@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { FaPlus, FaTimes, FaPaw } from "react-icons/fa";
+import InputField from "../../components/Form/InputField"; // ajuste o caminho conforme necessário
 
 export default function PetForm({ pet }) {
+  // Informações básicas
   const [name, setName] = useState(pet?.name || "");
   const [breed, setBreed] = useState(pet?.breed || "");
   const [age, setAge] = useState(pet?.age || "");
@@ -10,44 +12,59 @@ export default function PetForm({ pet }) {
   const [size, setSize] = useState(pet?.size || "");
   const [about, setAbout] = useState(pet?.about || "");
   const [care, setCare] = useState(pet?.care || [""]);
-  const [img, setImg] = useState(pet?.img || "");
-  const [gallery, setGallery] = useState(pet?.gallery || [""]);
 
+  // Imagens
+  const [imgFile, setImgFile] = useState(null);
+  const [galleryFiles, setGalleryFiles] = useState([]);
+
+  // Submissão
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({
-      name,
-      breed,
-      age,
-      gender,
-      weight,
-      size,
-      about,
-      care,
-      img,
-      gallery,
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("breed", breed);
+    formData.append("age", age);
+    formData.append("gender", gender);
+    formData.append("weight", weight);
+    formData.append("size", size);
+    formData.append("about", about);
+    care.forEach((c, i) => formData.append(`care[${i}]`, c));
+    if (imgFile) formData.append("img", imgFile);
+    galleryFiles.forEach((file, i) => {
+      if (file) formData.append(`gallery[${i}]`, file);
     });
+
+    console.log("FormData enviado:", formData);
     alert("Pet salvo com sucesso!");
   };
 
+  // Cuidados
   const handleCareChange = (index, value) => {
     const newCare = [...care];
     newCare[index] = value;
     setCare(newCare);
   };
-
   const addCare = () => setCare([...care, ""]);
   const removeCare = (index) => setCare(care.filter((_, i) => i !== index));
 
-  const handleGalleryChange = (index, value) => {
-    const newGallery = [...gallery];
-    newGallery[index] = value;
-    setGallery(newGallery);
+  // Imagem principal
+  const handleImgChange = (e) => {
+    const file = e.target.files[0];
+    if (file) setImgFile(file);
   };
 
-  const addGallery = () => setGallery([...gallery, ""]);
-  const removeGallery = (index) =>
-    setGallery(gallery.filter((_, i) => i !== index));
+  // Galeria
+  const handleGalleryChange = (index, e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const newGallery = [...galleryFiles];
+      newGallery[index] = file;
+      setGalleryFiles(newGallery);
+    }
+  };
+  const addGallery = () => setGalleryFiles([...galleryFiles, null]);
+  const removeGallery = (index) => setGalleryFiles(galleryFiles.filter((_, i) => i !== index));
 
   return (
     <form
@@ -61,139 +78,71 @@ export default function PetForm({ pet }) {
 
       {/* Imagem principal */}
       <div className="flex flex-col items-center">
-        <div className="relative w-32 h-32">
+        {imgFile ? (
           <img
-            src={
-              img ||
-              "https://cdn-icons-png.flaticon.com/512/616/616408.png"
-            }
-            alt="Avatar Pet"
+            src={URL.createObjectURL(imgFile)}
+            alt="Imagem principal"
             className="w-32 h-32 rounded-full object-cover border-4 border-gray-200 shadow"
           />
-          <label className="absolute bottom-2 right-2 bg-blue-600 text-white p-2 rounded-full cursor-pointer shadow hover:bg-blue-700">
-            <FaPlus />
-            <input
-              type="text"
-              placeholder="URL da imagem"
-              className="hidden"
-              onChange={(e) => setImg(e.target.value)}
-            />
-          </label>
-        </div>
-        <p className="text-sm text-gray-500 mt-2">Foto principal</p>
-        <input
-          type="text"
-          placeholder="URL da imagem principal"
-          value={img}
-          onChange={(e) => setImg(e.target.value)}
-          className="mt-2 w-full border px-3 py-2 rounded-lg text-sm"
+        ) : (
+          <div className="w-32 h-32 rounded-full border-4 border-gray-200 shadow flex items-center justify-center text-gray-400">
+            <FaPaw size={40} />
+          </div>
+        )}
+        <InputField
+          label="Selecionar imagem principal"
+          type="file"
+          accept="image/*"
+          onChange={handleImgChange}
         />
       </div>
 
       {/* Informações básicas */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium mb-1">Nome</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-400"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Raça</label>
-          <input
-            type="text"
-            value={breed}
-            onChange={(e) => setBreed(e.target.value)}
-            className="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-400"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Idade</label>
-          <input
-            type="text"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-            className="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-400"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Sexo</label>
-          <select
-            value={gender}
-            onChange={(e) => setGender(e.target.value)}
-            className="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-400"
-          >
-            <option value="">Selecione</option>
-            <option value="Macho">Macho</option>
-            <option value="Fêmea">Fêmea</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Peso (kg)</label>
-          <input
-            type="text"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            className="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-400"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium mb-1">Porte</label>
-          <input
-            type="text"
-            value={size}
-            onChange={(e) => setSize(e.target.value)}
-            className="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-400"
-          />
-        </div>
+        <InputField label="Nome" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <InputField label="Raça" type="text" value={breed} onChange={(e) => setBreed(e.target.value)} />
+        <InputField label="Idade" type="number" value={age} onChange={(e) => setAge(e.target.value)} />
+        <InputField
+          label="Sexo"
+          type="select"
+          value={gender}
+          onChange={(e) => setGender(e.target.value)}
+          options={[
+            { value: "", label: "Selecione" },
+            { value: "Macho", label: "Macho" },
+            { value: "Fêmea", label: "Fêmea" },
+          ]}
+        />
+        <InputField label="Peso (kg)" type="number" value={weight} onChange={(e) => setWeight(e.target.value)} />
+        <InputField label="Porte" type="text" value={size} onChange={(e) => setSize(e.target.value)} />
       </div>
 
       {/* Sobre */}
-      <div>
-        <label className="block text-sm font-medium mb-1">Sobre</label>
-        <textarea
-          value={about}
-          onChange={(e) => setAbout(e.target.value)}
-          className="w-full border px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-400"
-          rows="3"
-        />
-      </div>
+      <InputField
+        label="Sobre"
+        type="textarea"
+        value={about}
+        onChange={(e) => setAbout(e.target.value)}
+        placeholder="Escreva algo sobre o pet"
+      />
 
       {/* Cuidados */}
       <div>
         <label className="block text-sm font-medium mb-2">Cuidados especiais</label>
         {care.map((c, i) => (
           <div key={i} className="flex gap-2 mb-2 items-center">
-            <input
+            <InputField
               type="text"
               value={c}
               onChange={(e) => handleCareChange(i, e.target.value)}
-              className="flex-1 border px-3 py-2 rounded-lg focus:ring-2 focus:ring-blue-400"
+              placeholder="Ex: Necessita de medicação diária"
             />
-            <button
-              type="button"
-              className="text-red-500 hover:text-red-700"
-              onClick={() => removeCare(i)}
-            >
+            <button type="button" className="text-red-500 hover:text-red-700" onClick={() => removeCare(i)}>
               <FaTimes />
             </button>
           </div>
         ))}
-        <button
-          type="button"
-          className="text-blue-600 text-sm flex items-center gap-1"
-          onClick={addCare}
-        >
+        <button type="button" className="text-blue-600 text-sm flex items-center gap-1" onClick={addCare}>
           <FaPlus /> Adicionar cuidado
         </button>
       </div>
@@ -202,11 +151,11 @@ export default function PetForm({ pet }) {
       <div>
         <label className="block text-sm font-medium mb-2">Galeria de imagens</label>
         <div className="grid grid-cols-3 gap-3">
-          {gallery.map((g, i) => (
+          {galleryFiles.map((file, i) => (
             <div key={i} className="relative">
-              {g ? (
+              {file ? (
                 <img
-                  src={g}
+                  src={URL.createObjectURL(file)}
                   alt={`Galeria ${i + 1}`}
                   className="w-full h-24 object-cover rounded-lg border"
                 />
@@ -222,21 +171,15 @@ export default function PetForm({ pet }) {
               >
                 <FaTimes size={12} />
               </button>
-              <input
-                type="text"
-                value={g}
-                placeholder="URL da imagem"
-                onChange={(e) => handleGalleryChange(i, e.target.value)}
-                className="w-full mt-1 border px-2 py-1 text-xs rounded-lg"
+              <InputField
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleGalleryChange(i, e)}
               />
             </div>
           ))}
         </div>
-        <button
-          type="button"
-          className="mt-2 text-blue-600 text-sm flex items-center gap-1"
-          onClick={addGallery}
-        >
+        <button type="button" className="mt-2 text-blue-600 text-sm flex items-center gap-1" onClick={addGallery}>
           <FaPlus /> Adicionar imagem
         </button>
       </div>

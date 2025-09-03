@@ -4,6 +4,7 @@ import FiltersCaregiversList from "./FiltersCaregiversList";
 import CaregiverCard from "./CaregiverCard";
 import { FaFilter, FaInbox, FaSpinner } from "react-icons/fa";
 import DataWrapper from "../../components/DataWrapper";
+import Button from "../../components/Button/Button";
 
 const CaregiverPage = () => {
   const [caregivers, setCaregivers] = useState([]);
@@ -65,12 +66,15 @@ const CaregiverPage = () => {
             {!isLoading && (
               <>
               <span className="font-semibold text-gray-800">{filteredHosts.length} anfitriões encontrados</span>
-              <button
+              <Button
                 onClick={() => setOpenFilter(!openFilter)}
-                className={`${openFilter ? "bg-red-600 hover:bg-red-500" : "bg-indigo-600 hover:bg-indigo-500"} text-white px-5 py-2 rounded-lg flex items-center`}
+                variant={openFilter ? "danger" : "primary"} // vermelho ou azul
+                icon={FaFilter}
+                iconPosition="left"
+                size="md"
               >
-                <FaFilter /> {openFilter ? "Fechar Filtro" : "Ajustar Filtro"}
-              </button>
+                {openFilter ? "Fechar Filtro" : "Ajustar Filtro"}
+              </Button>
               </>
             )}
             

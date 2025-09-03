@@ -1,83 +1,40 @@
-const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/database');
+import BaseModel from "./BaseModel.js";
 
-const Pet = sequelize.define('Pet', {
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  name: {
-    type: DataTypes.STRING(30),
-    allowNull: false,
-    validate: {
-      notNull: { msg: 'Nome do pet é obrigatório' },
-      notEmpty: { msg: 'Nome do pet não pode estar vazio' }
-    }
-  },
-  species: {
-    type: DataTypes.ENUM('cachorro', 'gato', 'pássaro', 'roedor', 'outros'),
-    allowNull: false
-  },
-  breed: {
-    type: DataTypes.STRING(50),
-    allowNull: false
-  },
-  age: {
-    type: DataTypes.INTEGER,
-    allowNull: true
-  },
-  weight: {
-    type: DataTypes.FLOAT,
-    allowNull: true
-  },
-  color: {
-    type: DataTypes.STRING(30),
-    allowNull: true
-  },
-  birth_date: {
-    type: DataTypes.DATE,
-    allowNull: true
-  },
-  gender: {
-    type: DataTypes.ENUM('macho', 'fêmea'),
-    allowNull: false
-  },
-  temperament: {
-    type: DataTypes.ENUM('calmo', 'agitado', 'amigável', 'arredio', 'agressivo'),
-    defaultValue: 'calmo'
-  },
-  special_care: {
-    type: DataTypes.TEXT,
-    allowNull: true
-  },
-  feeding_instructions: {
-    type: DataTypes.TEXT,
-    allowNull: true
-  },
-  medication: {
-    type: DataTypes.TEXT,
-    allowNull: true
-  },
-  veterinarian_contact: {
-    type: DataTypes.STRING(100),
-    allowNull: true
-  },
-  emergency_contact: {
-    type: DataTypes.STRING(100),
-    allowNull: true
-  },
-  photo_url: {
-    type: DataTypes.STRING(255),
-    allowNull: true
-  },
-  is_active: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: true
+class Pet extends BaseModel {
+  constructor() {
+    super("pets");
   }
-}, {
-  tableName: 'pets',
-  timestamps: true
-});
 
-module.exports = Pet;
+  async getAll(owner_id = null) {
+    const rows = owner_id
+      ? await this.findAll("owner_id = ?", [owner_id])
+      : await this.findAll();
+
+    // desserializar JSON para o front
+    return rows.map((pet) => ({
+      ...pet,
+      care: pet.care ? JSON.parse(pet.care) : [],
+      gallery: pet.gallery ? JSON.parse(pet.gallery) : [],
+    }));
+  }
+
+  async create(data) {
+    const newData = {
+      ...data,
+      care: JSON.stringify(data.care || []),
+      gallery: JSON.stringify(data.gallery || []),
+    };
+    return super.create(newData);
+  }
+
+  async update(id, data) {
+    const newData = {
+      ...data,
+      care: JSON.stringify(data.care || []),
+      gallery: JSON.stringify(data.gallery || []),
+    };
+    return super.update(id, newData);
+  }
+}
+
+export default new Pet();
