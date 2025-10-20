@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import petRoutes from "./routes/petRoutes.js";
+import caregiers from "./routes/caregivers.js"
 
 dotenv.config();
 
@@ -10,6 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/pets", petRoutes);
+app.use("/caregivers", caregiers);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Servidor rodando na porta ${PORT}`));
