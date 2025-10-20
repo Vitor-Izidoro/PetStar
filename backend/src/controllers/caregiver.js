@@ -37,7 +37,7 @@ export const getCaregiverById = async (req, res) => {
         f.*,
         s.*
       FROM caregivers c
-      LEFT JOIN caregiver_address a ON c.id = a.caregiver_id
+      LEFT JOIN caregiver_addresses a ON c.id = a.caregiver_id
       LEFT JOIN caregiver_features f ON c.id = f.caregiver_id
       LEFT JOIN caregiver_services s ON c.id = s.caregiver_id
       WHERE c.id = ?
