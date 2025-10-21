@@ -1,28 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaPaw, FaGoogle, FaFacebookF, FaApple, FaEnvelope, FaLock } from "react-icons/fa";
-import { Link } from "react-router-dom"; // Necessário para simular links
+import { Link } from "react-router-dom";
 
 const Login = () => {
+  const [error, setError] = useState(""); // Estado para mensagem de erro
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Por enquanto apenas simulação:
+    setError("E-mail ou senha incorretos."); 
+  };
+
   return (
-    // Container Principal: Fundo levemente cinza
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-sm sm:max-w-md bg-white rounded-2xl shadow-2xl overflow-hidden transform transition-all duration-500 hover:shadow-indigo-400/50">
         
-        {/* Header com Branding e Estilo */}
+        {/* Header */}
         <div className="bg-indigo-600 text-white text-center py-8 px-4 relative">
           <FaPaw className="mx-auto w-10 h-10 mb-2 text-orange-300 transform rotate-12" />
-          <h2 className="text-3xl font-extrabold tracking-wider">
-            PetStar
-          </h2>
+          <h2 className="text-3xl font-extrabold tracking-wider">PetStar</h2>
           <p className="mt-1 text-base opacity-90">Bem-vindo(a) de volta!</p>
-          {/* Detalhe de curva para a separação visual */}
           <div className="absolute bottom-0 left-0 w-full h-4 bg-white rounded-t-full transform translate-y-full"></div>
         </div>
 
-        {/* Formulário e Social Login */}
+        {/* Form */}
         <div className="p-8 sm:p-10">
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-            
+          <form className="space-y-6" onSubmit={handleLogin}>
             {/* Campo E-mail */}
             <div>
               <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -65,19 +68,24 @@ const Login = () => {
               </div>
             </div>
 
-            {/* Botão Principal Entrar (com gradiente e efeito 3D) */}
+            {/* Botão Entrar */}
             <button
               type="submit"
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-bold text-lg shadow-lg shadow-indigo-500/50 transition transform hover:scale-[1.01] active:scale-[0.99] duration-150"
-              style={{
-                backgroundImage: 'linear-gradient(to right, #4F46E5, #6366F1)'
-              }}
+              style={{ backgroundImage: 'linear-gradient(to right, #4F46E5, #6366F1)' }}
             >
               Entrar na Plataforma
             </button>
+
+            {/* Mensagem de Erro */}
+            {error && (
+              <p className="mt-4 text-center text-sm font-medium text-red-600 bg-red-50 border border-red-200 px-3 py-2 rounded-lg">
+                {error}
+              </p>
+            )}
           </form>
 
-          {/* Divisor "Ou entre com" */}
+          {/* Divisor */}
           <div className="flex items-center my-8">
             <hr className="flex-1 border-gray-200" />
             <span className="px-3 text-gray-500 text-sm font-medium uppercase tracking-wider">
@@ -86,7 +94,7 @@ const Login = () => {
             <hr className="flex-1 border-gray-200" />
           </div>
 
-          {/* Social Login Buttons */}
+          {/* Social Login */}
           <div className="flex justify-center gap-4">
             <button className="w-14 h-14 rounded-full border border-gray-300 flex items-center justify-center hover:shadow-md hover:border-indigo-400 transition transform hover:-translate-y-1 duration-200 bg-white">
               <FaGoogle className="text-red-600 text-xl" />
@@ -99,7 +107,7 @@ const Login = () => {
             </button>
           </div>
 
-          {/* Footer Link Cadastre-se */}
+          {/* Link Cadastro */}
           <div className="text-center text-sm text-gray-600 mt-10">
             <p className="font-medium">
               Não tem uma conta PetStar?{" "}
