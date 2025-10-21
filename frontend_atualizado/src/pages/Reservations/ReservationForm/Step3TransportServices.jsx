@@ -1,7 +1,11 @@
+import { useState } from "react";
+
 const Step3TransportServices = ({
   transportOption, setTransportOption, address, setAddress,
   availableServices, additionalServices, setAdditionalServices, setStep
 }) => {
+  const [error, setError] = useState("");
+
   const handleAdditionalService = (serviceId) => {
     if (additionalServices.includes(serviceId)) {
       setAdditionalServices(additionalServices.filter(id => id !== serviceId));
@@ -16,6 +20,27 @@ const Step3TransportServices = ({
     { id: "levar-only", label: "Preciso que leve meu pet", price: 15 },
     { id: "buscar-levar", label: "Preciso que busque e leve meu pet", price: 30 },
   ];
+
+  const handleNext = () => {
+    // Nenhuma opção escolhida
+    if (!transportOption) {
+      setError("Selecione uma opção de transporte para continuar.");
+      return;
+    }
+    // Endereço obrigatório para opções com transporte
+    if (
+      (transportOption === "buscar-only" || 
+       transportOption === "levar-only" || 
+       transportOption === "buscar-levar") &&
+      !address.trim()
+    ) {
+      setError("Informe o endereço para busca/entrega.");
+      return;
+    }
+
+    setError(""); // limpa erro
+    setStep(4);
+  };
 
   return (
     <>
@@ -63,7 +88,6 @@ const Step3TransportServices = ({
             className="w-full border rounded-lg p-2"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
-            required
           />
         </div>
       )}
@@ -103,6 +127,9 @@ const Step3TransportServices = ({
         </div>
       </div>
 
+      {/* Mensagem de erro */}
+      {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
+
       <div className="flex gap-2 mt-4">
         <button
           type="button"
@@ -113,7 +140,7 @@ const Step3TransportServices = ({
         </button>
         <button
           type="button"
-          onClick={() => setStep(4)}
+          onClick={handleNext}
           className="w-1/2 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-500"
         >
           Próximo

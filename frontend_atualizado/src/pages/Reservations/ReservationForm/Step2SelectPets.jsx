@@ -1,10 +1,24 @@
+import { useState } from "react";
+
 const Step2SelectPets = ({ userPets, selectedPets, setSelectedPets, setStep }) => {
+  const [error, setError] = useState("");
+
   const handlePetSelection = (petId) => {
+    setError(""); // sempre limpa erro antes
+
     if (selectedPets.includes(petId)) {
-      setSelectedPets(selectedPets.filter(id => id !== petId));
+      setSelectedPets(selectedPets.filter((id) => id !== petId));
     } else {
       setSelectedPets([...selectedPets, petId]);
     }
+  };
+
+  const handleNext = () => {
+    if (selectedPets.length === 0) {
+      setError("Selecione pelo menos um pet para continuar.");
+      return;
+    }
+    setStep(3);
   };
 
   return (
@@ -34,10 +48,16 @@ const Step2SelectPets = ({ userPets, selectedPets, setSelectedPets, setStep }) =
                     <span className="text-white text-xs">✓</span>
                   )}
                 </div>
-                <img src={pet.image} alt={pet.name} className="w-10 h-10 rounded-full object-cover mr-3" />
+                <img
+                  src={pet.image}
+                  alt={pet.name}
+                  className="w-10 h-10 rounded-full object-cover mr-3"
+                />
                 <div>
                   <div className="font-medium">{pet.name}</div>
-                  <div className="text-sm text-gray-600">{pet.breed} • {pet.age}</div>
+                  <div className="text-sm text-gray-600">
+                    {pet.breed} • {pet.age}
+                  </div>
                 </div>
               </div>
             </div>
@@ -45,7 +65,10 @@ const Step2SelectPets = ({ userPets, selectedPets, setSelectedPets, setStep }) =
         </div>
       </div>
 
-      <div className="flex gap-2">
+      {/* Mostra mensagem de erro se tiver */}
+      {error && <p className="text-red-600 text-sm mt-2">{error}</p>}
+
+      <div className="flex gap-2 mt-3">
         <button
           type="button"
           onClick={() => setStep(1)}
@@ -55,9 +78,8 @@ const Step2SelectPets = ({ userPets, selectedPets, setSelectedPets, setStep }) =
         </button>
         <button
           type="button"
-          onClick={() => setStep(3)}
+          onClick={handleNext}
           className="w-1/2 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-500"
-          disabled={selectedPets.length === 0}
         >
           Próximo
         </button>
