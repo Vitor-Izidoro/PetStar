@@ -28,6 +28,10 @@ import PetMonitoring from "./pages/PetMonitoring/PetMonitoring";
 
 import PaymentPage from "./pages/Payment/PaymentPage";
 
+import CaregiverPage from './pages/Home/UsuarioNaoEntendei'
+import ExplicacaoFluxo from "./pages/Home/ExplicacaoFluxo";
+
+
 const App = () => {
   return (
     <AuthProvider>
@@ -37,6 +41,8 @@ const App = () => {
             <Route path="/" element={<Home />}>
               {/* Página inicial */}
               <Route index element={<HomeContent />} />
+              <Route path="/fluxo" element={<CaregiverPage />} /> 
+              <Route path="/como-funciona" element={<ExplicacaoFluxo />} />
 
               {/* Autenticação */}
               <Route path="login" element={<Login />} />
