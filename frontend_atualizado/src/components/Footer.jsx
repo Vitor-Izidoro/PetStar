@@ -21,8 +21,8 @@ const Footer = () => {
           <h5 className="text-xl font-bold mb-4 text-white">Links</h5>
           <ul className="space-y-2">
             <li><a href="/como-funciona">Como funciona</a></li>
-            <li><a href="#">Para Donos</a></li>
-            <li><a href="#">Para Anfitriões</a></li>
+            <li><a href="/para-donos">Para Donos</a></li>
+            <li><a href="/reservationsClient">Para Anfitriões</a></li>
             <li><a href="#">Ajuda</a></li>
           </ul>
         </div>
