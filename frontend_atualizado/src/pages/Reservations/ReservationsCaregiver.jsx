@@ -26,34 +26,63 @@ export default function ReservationsCaregiver() {
   };
 
   useEffect(() => fetchBookings(), []);
+const handleAccept = (id) => {
+  setProcessingId(id);
 
-  const handleAccept = (id) => {
-    setProcessingId(id);
-    // Simula uma chamada API
+  // 🔎 Simulação de validação de conflito
+  const hasConflict = Math.random() < 0.5; // <-- aqui você pode trocar depois por validação real
+  if (hasConflict) {
     setTimeout(() => {
-      setBookings(prevBookings => 
-        prevBookings.map(booking => 
-          booking.id === id 
-            ? { 
-                ...booking, 
-                status: "confirmada",
-                message: "Reserva confirmada com sucesso!"
-              } 
+      setBookings(prevBookings =>
+        prevBookings.map(booking =>
+          booking.id === id
+            ? {
+                ...booking,
+                status: "pendente", // mantém pendente
+                message: "⚠️ Conflito de horários detectado. Não foi possível confirmar a reserva."
+              }
             : booking
         )
       );
       setProcessingId(null);
-      
-      // Atualiza também a reserva selecionada se for a mesma
+
       if (selectedBooking && selectedBooking.id === id) {
         setSelectedBooking({
           ...selectedBooking,
-          status: "confirmada",
-          message: "Reserva confirmada com sucesso!"
+          status: "pendente",
+          message: "⚠️ Conflito de horários detectado. Não foi possível confirmar a reserva."
         });
       }
     }, 1000);
-  };
+    return; // 🚫 Sai antes de confirmar
+  }
+
+  // Caso não tenha conflito → confirma normal
+  setTimeout(() => {
+    setBookings(prevBookings => 
+      prevBookings.map(booking => 
+        booking.id === id 
+          ? { 
+              ...booking, 
+              status: "confirmada",
+              message: "Reserva confirmada com sucesso!"
+            } 
+          : booking
+      )
+    );
+    setProcessingId(null);
+    
+    if (selectedBooking && selectedBooking.id === id) {
+      setSelectedBooking({
+        ...selectedBooking,
+        status: "confirmada",
+        message: "Reserva confirmada com sucesso!"
+      });
+    }
+  }, 1000);
+};
+
+  
 
   const handleReject = (id) => {
     setProcessingId(id);
@@ -264,6 +293,19 @@ export default function ReservationsCaregiver() {
                 )}
               </div>
             </div>
+            {/* Mensagem de status (erro ou sucesso) */}
+{b.message && (
+  <div
+    className={`mt-2 text-sm font-medium ${
+      b.message.includes("Conflito")
+        ? "text-red-600"
+        : "text-green-600"
+    }`}
+  >
+    {b.message}
+  </div>
+)}
+
           </div>
         ))}
       </DataWrapper>

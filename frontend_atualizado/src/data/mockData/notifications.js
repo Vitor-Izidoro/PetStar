@@ -10,6 +10,19 @@ export const notificationsMock = [
     clientName: "João",
     link: "/reservas/1"
   },
+
+    {
+    id: 200,
+    title: "Nova reserva recusada",
+    message: "Cliente solicitou hospedagem para Rex.",
+    type: "reservation",
+    isRead: false,
+    date: "2025-08-25 07:30",
+    petName: "Rex",
+    clientName: "João",
+    link: "/reservas/1"
+  },
+
   {
     id: 2,
     title: "Mensagem de Ana Silva",

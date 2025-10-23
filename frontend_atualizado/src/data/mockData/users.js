@@ -1,7 +1,7 @@
 // Simulação de usuário logado
 export const currentUser = {
   id: 1,
-  role: "owner", // troque para "caregiver" para testar
+  role: "owner", // troque para " " para testar
   name: "Ricardo",
   email: "ricardo@email.com",
   avatar: "https://randomuser.me/api/portraits/men/32.jpg",
