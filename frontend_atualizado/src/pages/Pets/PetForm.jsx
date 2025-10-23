@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaPlus, FaTimes, FaPaw } from "react-icons/fa";
+import { FaPlus, FaTimes, FaPaw, FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
 import InputField from "../../components/Form/InputField"; // ajuste o caminho conforme necessário
 
 export default function PetForm({ pet }) {
@@ -17,9 +17,21 @@ export default function PetForm({ pet }) {
   const [imgFile, setImgFile] = useState(null);
   const [galleryFiles, setGalleryFiles] = useState([]);
 
+  // Mensagem de feedback
+  const [message, setMessage] = useState({ type: "", text: "" });
+
   // Submissão
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Verificação dos campos obrigatórios
+    if (!name || !breed || !age || !size) {
+      setMessage({
+        type: "error",
+        text: "Preencha todos os campos obrigatórios (*).",
+      });
+      return;
+    }
 
     const formData = new FormData();
     formData.append("name", name);
@@ -36,7 +48,11 @@ export default function PetForm({ pet }) {
     });
 
     console.log("FormData enviado:", formData);
-    alert("Pet salvo com sucesso!");
+
+    setMessage({
+      type: "success",
+      text: "Pet salvo com sucesso!",
+    });
   };
 
   // Cuidados
@@ -76,6 +92,20 @@ export default function PetForm({ pet }) {
         {pet ? "Editar Pet" : "Adicionar Pet"}
       </h3>
 
+      {/* Mensagem de feedback */}
+      {message.text && (
+        <div
+          className={`p-4 rounded-lg flex items-center gap-2 ${
+            message.type === "success"
+              ? "bg-green-100 text-green-700 border border-green-300"
+              : "bg-red-100 text-red-700 border border-red-300"
+          }`}
+        >
+          {message.type === "success" ? <FaCheckCircle /> : <FaExclamationTriangle />}
+          <span>{message.text}</span>
+        </div>
+      )}
+
       {/* Imagem principal */}
       <div className="flex flex-col items-center">
         {imgFile ? (
@@ -99,9 +129,9 @@ export default function PetForm({ pet }) {
 
       {/* Informações básicas */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <InputField label="Nome" type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        <InputField label="Raça" type="text" value={breed} onChange={(e) => setBreed(e.target.value)} />
-        <InputField label="Idade" type="number" value={age} onChange={(e) => setAge(e.target.value)} />
+        <InputField label="Nome*" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        <InputField label="Raça*" type="text" value={breed} onChange={(e) => setBreed(e.target.value)} />
+        <InputField label="Idade*" type="number" value={age} onChange={(e) => setAge(e.target.value)} />
         <InputField
           label="Sexo"
           type="select"
@@ -114,7 +144,7 @@ export default function PetForm({ pet }) {
           ]}
         />
         <InputField label="Peso (kg)" type="number" value={weight} onChange={(e) => setWeight(e.target.value)} />
-        <InputField label="Porte" type="text" value={size} onChange={(e) => setSize(e.target.value)} />
+        <InputField label="Porte*" type="text" value={size} onChange={(e) => setSize(e.target.value)} />
       </div>
 
       {/* Sobre */}

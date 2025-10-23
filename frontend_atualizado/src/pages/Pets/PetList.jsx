@@ -4,19 +4,32 @@ import Modal from "../../components/Modal";
 import PetProfile from "./PetProfile";
 import PetForm from "./PetForm";
 import DataWrapper from "../../components/DataWrapper";
-import { usePets } from "../../context/PetContext";
 
 export default function PetList() {
-  const { pets, loading, addPet, editPet } = usePets();
+  // Mock de pets para teste rápido
+  const [pets, setPets] = useState([
+    {
+      id: 1,
+      name: "Thor",
+      breed: "Labrador Retriever",
+      age: "3 anos",
+      gender: "Macho",
+      img: "https://images.unsplash.com/photo-1558788353-f76d92427f16?w=800&h=600&fit=crop", // imagem bonita de pet
+    },
+  ]);
+
+  const [loading, setLoading] = useState(false);
   const [isProfileOpen, setProfileOpen] = useState(false);
   const [isFormOpen, setFormOpen] = useState(false);
   const [selectedPet, setSelectedPet] = useState(null);
 
   const handleSavePet = (petData) => {
     if (petData.id) {
-      editPet(petData.id, petData);
+      // edição
+      setPets(pets.map((p) => (p.id === petData.id ? petData : p)));
     } else {
-      addPet(petData);
+      // novo
+      setPets([...pets, { ...petData, id: pets.length + 1 }]);
     }
     setFormOpen(false);
   };
@@ -54,11 +67,16 @@ export default function PetList() {
         {/* Lista de pets */}
         <div className="grid md:grid-cols-2 gap-6">
           {pets.map((pet) => (
-            <div key={pet.id} className="bg-gray-50 rounded-xl overflow-hidden shadow hover:shadow-lg transition">
+            <div
+              key={pet.id}
+              className="bg-gray-50 rounded-xl overflow-hidden shadow hover:shadow-lg transition"
+            >
               <img src={pet.img} alt={pet.name} className="w-full h-40 object-cover" />
               <div className="p-4">
                 <h5 className="font-semibold">{pet.name}</h5>
-                <p className="text-gray-500 text-sm">{pet.breed} • {pet.age} • {pet.gender}</p>
+                <p className="text-gray-500 text-sm">
+                  {pet.breed} • {pet.age} • {pet.gender}
+                </p>
                 <div className="flex justify-between mt-3">
                   <button
                     className="border border-blue-600 text-blue-600 px-3 py-1 rounded-lg text-sm hover:bg-blue-50"
@@ -85,10 +103,12 @@ export default function PetList() {
         </div>
       </DataWrapper>
 
+      {/* Modal do Perfil */}
       <Modal isOpen={isProfileOpen} onClose={() => setProfileOpen(false)}>
         {selectedPet && <PetProfile pet={selectedPet} />}
       </Modal>
 
+      {/* Modal do Formulário */}
       <Modal isOpen={isFormOpen} onClose={() => setFormOpen(false)}>
         <PetForm pet={selectedPet} onSave={handleSavePet} />
       </Modal>
